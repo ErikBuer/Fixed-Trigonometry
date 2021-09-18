@@ -50,7 +50,7 @@ pub fn powi<T>( base:T, power:usize ) -> T
 /// 
 /// * `x` - The value to apply the operation to.
 /// 
-/// x must be wrapped to the -π=<x<π range.
+/// `x` must be wrapped to the -π=<x<π range.
 /// 
 /// ## Example
 /// 
@@ -102,7 +102,7 @@ pub fn sin<T>( x: T ) -> T
 /// 
 /// * `x` - The value to apply the operation to.
 /// 
-/// x must be wrapped to the -π/2=<x<π/2 range.
+/// `x` must be wrapped to the -π/2=<x<π/2 range.
 /// 
 /// ## Example
 /// 
@@ -139,7 +139,7 @@ fn cos_poly<T>(x:T) -> T
 /// 
 /// * `x` - The value to apply the operation to.
 /// 
-/// x must be wrapped to the -π=<x<π range.
+/// `x` must be wrapped to the -π=<x<π range.
 /// 
 /// ## Example
 /// 
