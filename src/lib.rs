@@ -9,7 +9,7 @@ use fixed::traits::Fixed;
 
 /// Rase fixed number to an integer-valued power.
 /// - `base^power`.
-pub fn fixed_powi<T>( base:T, power:usize ) -> T
+pub fn powi<T>( base:T, power:usize ) -> T
     where T: fixed::traits::Fixed
 {
     let mut temp:T = base;
@@ -45,8 +45,8 @@ pub fn atan2<T>( y: T, x: T ) -> T
     where T: Fixed
 {
     let division: T = y/x;
-    return ( (division) + T::from_num(0.372003f32)*fixed_powi(division,3) ) 
-                        / (T::from_num(1) + T::from_num(0.703384f32)*fixed_powi(division,2) + T::from_num(0.043562f32)*fixed_powi(division,4) );
+    return ( (division) + T::from_num(0.372003f32)*powi(division,3) ) 
+                        / (T::from_num(1) + T::from_num(0.703384f32)*powi(division,2) + T::from_num(0.043562f32)*powi(division,4) );
 }
 
 /// Calculate atan(x) using a polynomial approximation.
@@ -75,8 +75,8 @@ pub fn atan2<T>( y: T, x: T ) -> T
 pub fn atan<T>( x: T ) -> T
     where T: Fixed
 {
-    return ( (x) + T::from_num(0.372003f32)*fixed_powi(x,3) ) 
-            / (T::from_num(1) + T::from_num(0.703384f32)*fixed_powi(x,2) + T::from_num(0.043562f32)*fixed_powi(x,4) );
+    return ( (x) + T::from_num(0.372003f32)*powi(x,3) ) 
+            / (T::from_num(1) + T::from_num(0.703384f32)*powi(x,2) + T::from_num(0.043562f32)*powi(x,4) );
 }
 
 
