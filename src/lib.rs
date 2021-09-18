@@ -1,3 +1,10 @@
+//! # Fixed point triognometric function implementation for real numbers.
+//! 
+//! This crate aims to add numerical implementations of trigonometric funcitons.
+//! 
+//! It utilizes the [fixed](https://crates.io/crates/fixed) library to allow flexibility in fixed point sizes and precisions.
+//!  
+
 #![crate_name = "fixed_trigonometry"]
 #![no_std]
 
@@ -5,7 +12,7 @@
 #[cfg(all(not(feature = "std"), test))]
 extern crate std;
 
-use fixed::traits::Fixed;
+use fixed;
 
 /// Rase fixed number to an integer-valued power.
 /// `base^power`.
@@ -203,7 +210,7 @@ pub fn atan2<T>( y: T, x: T ) -> T
 /// 
 /// Utilizes the following polynomial to estimate the angle θ \[radians\].
 /// 
-/// `atan(x) = ((x)+0.372003(x)^3) / (1+0.703384(x)^2 + 0.043562(x)^4)`
+/// `atan(x) = (x+0.372003*x^3) / (1+0.703384*x^2 + 0.043562*x^4)`
 /// 
 /// The method is accurat within 0.003 degrees when |θ|<=π/4.
 /// 
