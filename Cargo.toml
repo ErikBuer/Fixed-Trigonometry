@@ -2,7 +2,22 @@
 name = "fixed_trigonometry"
 version = "0.1.0"
 edition = "2018"
+authors = ["Erik Buer"]
+description = "No-STD numeric array."
+readme = "README.md"
+repository = "https://github.com/ErikBuer/Fixed-Trigonometry"
+license-file = "LICENSE"
+keywords = ["dsp", "no_std"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name  = "fixed_trigonometry"
+path  = "src/lib.rs"
+bench = false
+doc   = true
+test  = true
+edition    = "2018"
+crate-type = ["lib"]
+
 
 [dependencies]
+fixed = "1.10.0"
