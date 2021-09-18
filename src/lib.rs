@@ -1,9 +1,7 @@
-//! # Fixed point triognometric function implementation for real numbers.
 //! 
-//! This crate aims to add numerical implementations of trigonometric funcitons.
+//! No-STD fixed-point numeric implementation of trigonometric functions in Rust.
 //! 
 //! It utilizes the [fixed](https://crates.io/crates/fixed) library to allow flexibility in fixed point sizes and precisions.
-//!  
 //! 
 //! ## Example
 //! 
