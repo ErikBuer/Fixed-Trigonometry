@@ -56,15 +56,15 @@ pub fn powi<T>( base:T, power:usize ) -> T
 /// 
 /// ```
 /// use fixed_trigonometry::*;
-/// use fixed::{types::extra::U18, FixedI32};
+/// use fixed::{types::extra::U22, FixedI32};
 /// 
-/// let mut x = FixedI32::<U18>::from_num(0);
+/// let mut x = FixedI32::<U22>::from_num(0);
 /// let mut y = sin(x);
 /// assert_eq!{ y.to_num::<f32>(), 0.0 };
 /// 
-/// x = FixedI32::<U18>::from_num(3.1415/2.0);
+/// x = FixedI32::<U22>::from_num(3.1415/2.0);
 /// y = sin(x);
-/// assert_eq!{ y.to_num::<f32>(), 1.0000038 };
+/// assert_eq!{ y.to_num::<f32>(), 1.0000036 };
 /// ``` 
 pub fn sin<T>( x: T ) -> T
     where T: fixed::traits::FixedSigned
@@ -88,8 +88,8 @@ pub fn sin<T>( x: T ) -> T
     // Calculate sine by using 
     let mut sinx = x_-( powi(x_,3)/<T>::from_num(6) );
     sinx += powi(x_,5)/<T>::from_num(120);
-    sinx -= (powi(x_,7)/<T>::from_num(2520)) >> 1;
-    sinx += (powi(x_,9)/<T>::from_num(2835)) >> 7;
+    sinx -= (powi(x_,7)/<T>::from_num(315)) >> 4;
+    sinx += (((powi(x_,9)/<T>::from_num(81))/<T>::from_num(7))/<T>::from_num(5)) >> 7;
     return sinx;
 }
 
