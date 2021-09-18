@@ -25,7 +25,7 @@ use fixed;
 /// Rase fixed number to an integer-valued power.
 /// `base^power`.
 /// 
-/// /// ## Argument
+/// ## Arguments
 /// 
 /// * `base`  - The base number.
 /// * `power` - The power to raise 'base' to.
@@ -98,7 +98,7 @@ pub fn sin<T>( x: T ) -> T
 /// 
 /// `cos(x) = 1 -( x^2/2 )+( x^4/24 )-( x^6/720 )+( x^8/40320 )`
 /// 
-/// /// ## Argument
+/// ## Argument
 /// 
 /// * `x` - The value to apply the operation to.
 /// 
