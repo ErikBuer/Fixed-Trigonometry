@@ -12,4 +12,5 @@ Release notes are found under RELEASES.md.
 
 ## Functionality
 
-The library currnetly implements sin cos and atan for fixed-point numbers.
+The library currently implements `sin`, `cos` and `atan` for real fixed-point numbers.
+It also has a utility functions `powi` and `complex::powi`.

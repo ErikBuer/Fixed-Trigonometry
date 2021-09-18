@@ -1,8 +1,8 @@
 # Release Notes
 
-## Release 0.1.2 (2021-09-?)
+## Release 0.1.2 (2021-09-18)
 
-- Added complex square root.
+- Added complex powi.
 
 ## Release 0.1.1 (2021-09-18)
 

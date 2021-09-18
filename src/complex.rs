@@ -1,5 +1,3 @@
-use fixed_sqrt::FixedSqrt;
-
 /// Rase a complex fixed-point number to an real-valued integer power.
 /// `base^power`.
 /// 
