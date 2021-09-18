@@ -21,3 +21,8 @@ crate-type = ["lib"]
 
 [dependencies]
 fixed = "1.10.0"
+fixed-sqrt = "0.2.4"
+
+[dependencies.num]
+version = "0.4"
+default-features = false

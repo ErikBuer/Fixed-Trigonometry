@@ -22,6 +22,8 @@ extern crate std;
 
 use fixed;
 
+mod complex;
+
 /// Rase fixed number to an integer-valued power.
 /// `base^power`.
 /// 
