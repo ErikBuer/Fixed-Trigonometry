@@ -9,7 +9,7 @@
 //! use fixed_trigonometry::*;
 //! use fixed::{types::extra::U28, FixedI32};
 //! 
-//! let arg = atan( FixedI32::<U28>::from_num(0.6)/FixedI32::<U28>::from_num(0.4) );
+//! let arg = atan::atan( FixedI32::<U28>::from_num(0.6)/FixedI32::<U28>::from_num(0.4) );
 //! assert_eq!{ arg.to_num::<f32>(), 0.983006064 };
 //! ``` 
 
@@ -23,6 +23,7 @@ extern crate std;
 use fixed;
 
 pub mod complex;
+pub mod atan;
 
 /// Rase fixed number to an integer-valued power.
 /// `base^power`.
@@ -32,6 +33,16 @@ pub mod complex;
 /// * `base`  - The base number.
 /// * `power` - The power to raise 'base' to.
 /// 
+/// ## Example
+/// 
+/// ```
+/// use fixed_trigonometry::*;
+/// use fixed::{types::extra::U22, FixedI32};
+/// 
+/// let mut x = FixedI32::<U22>::from_num(-2);
+/// let y = powi(x, 2);
+/// assert_eq!{ y.to_num::<f32>(), 4.0 };
+/// ``` 
 pub fn powi<T>( base:T, power:usize ) -> T
     where T: fixed::traits::Fixed
 {
@@ -40,6 +51,40 @@ pub fn powi<T>( base:T, power:usize ) -> T
         temp = temp*base;
     }
     return temp;
+}
+
+/// Get the sign of the argument with a unit value.
+/// Zero is of positive sign.
+/// 
+/// ## Arguments
+/// 
+/// * `x`  - The function argument.
+/// 
+/// ## Example
+/// 
+/// ```
+/// use fixed_trigonometry::*;
+/// use fixed::{types::extra::U22, FixedI32};
+/// 
+/// let mut x = FixedI32::<U22>::from_num(-0.2);
+/// let mut y = sign(x);
+/// assert_eq!{ y.to_num::<f32>(), -1.0 };
+/// 
+/// x = FixedI32::<U22>::from_num(0.2);
+/// y = sign(x); 
+/// assert_eq!{ y.to_num::<f32>(), 1.0 };
+/// ``` 
+pub fn sign<T>( x:T ) -> T
+    where T: fixed::traits::FixedSigned
+{
+    if x<0
+    {
+        return T::from_num(-1);
+    }
+    else
+    {
+        return T::from_num(1);
+    }
 }
 
 /// Calculate sine using a Taylor approximation of `sin(x)`.
@@ -185,68 +230,6 @@ pub fn cos<T>( x: T ) -> T
     }
     return cosx;
 }
-
-/// Calculate atan(y/x) using a polynomial approximation of `atan(y/x)`.
-/// 
-/// Utilizes the following polynomial to estimate the angle θ \[radians\].
-/// 
-/// `atan(y,x) = ((y,x)+0.372003(y,x)^3) / (1+0.703384(y/x)^2 + 0.043562(y/x)^4)`
-/// 
-/// The method is accurat within 0.003 degrees when |θ|<=π/4.
-/// 
-/// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Etition, IEEE Press, 2012.
-/// 
-/// ## Arguments 
-///
-/// * `y` - Is the argument along the y or imaginary axis.
-/// * `x` - Is the argument along the x or real axis.
-/// 
-/// ## Example
-/// 
-/// ```
-/// use fixed_trigonometry::*;
-/// use fixed::{types::extra::U28, FixedI32};
-/// let arg = atan2( FixedI32::<U28>::from_num(0.6), FixedI32::<U28>::from_num(0.4) );
-/// assert_eq!{ arg.to_num::<f32>(), 0.983006064 };
-/// ``` 
-pub fn atan2<T>( y: T, x: T ) -> T
-    where T: fixed::traits::FixedSigned
-{
-    let division: T = y/x;
-    return atan(division);
-}
-
-/// Calculate atan(x) using a polynomial approximation of `atan(x)`.
-/// 
-/// Utilizes the following polynomial to estimate the angle θ \[radians\].
-/// 
-/// `atan(x) = (x+0.372003*x^3) / (1+0.703384*x^2 + 0.043562*x^4)`
-/// 
-/// The method is accurat within 0.003 degrees when |θ|<=π/4.
-/// 
-/// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Etition, IEEE Press, 2012.
-/// 
-/// ## Arguments 
-///
-/// * `y` - Is the argument along the y or imaginary axis.
-/// * `x` - Is the argument along the x or real axis.
-/// 
-/// ## Example
-/// 
-/// ```
-/// use fixed_trigonometry::*;
-/// use fixed::{types::extra::U28, FixedI32};
-/// 
-/// let arg = atan( FixedI32::<U28>::from_num(0.6)/FixedI32::<U28>::from_num(0.4) );
-/// assert_eq!{ arg.to_num::<f32>(), 0.983006064 };
-/// ``` 
-pub fn atan<T>( x: T ) -> T
-    where T: fixed::traits::FixedSigned
-{
-    return ( (x) + T::from_num(0.372003f32)*powi(x,3) ) 
-            / (T::from_num(1) + T::from_num(0.703384f32)*powi(x,2) + T::from_num(0.043562f32)*powi(x,4) );
-}
-
 
 /// Wrapps θ to the -π=<x<π range.
 /// 

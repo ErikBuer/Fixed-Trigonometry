@@ -1,5 +1,11 @@
 # Release Notes
 
+## Release 0.2.0 (2021-10-xx)
+
+- Separated out atan approximations to own file.
+- Addad a fast atan approximation.
+- Added test for powi.
+
 ## Release 0.1.2 (2021-09-18)
 
 - Added complex powi.
