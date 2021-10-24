@@ -14,7 +14,7 @@ Release notes are found under RELEASES.md.
 
 The library currently implements:
 
-- `sin`and `cos` using low order polynomails, for real fixed-point numbers.
+- `sin` and `cos` using low order polynomails, for real fixed-point numbers.
 - `atan` using multiple numerical methods.
 - `sqrt` using the Nonlinear IIR Filter (NIIRF) method \[1\].
 - `powi` and `complex::powi`.
