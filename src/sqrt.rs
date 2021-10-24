@@ -1,17 +1,22 @@
 /// A fast implementation of the square root using the Nonlinear IIR Filter (NIIRF) method \[1\].
+/// 
 /// Only valid for positive values of x.
 /// Accurate to 5*10⁻⁴ with two iterations \[2\].
 /// 
-/// The structure of the estimator is illustrated below.
+/// The structure of the estimator is illustrated below \[1\].
+/// 
 /// ![Alt version](https://raw.githubusercontent.com/ErikBuer/Fixed-Trigonometry/main/figures/niirf.svg)
 /// 
 /// The method utilizes a lookup-table for the acceleration factor β.
+/// 
 /// β(x) can be calculated from the following formula, yielding even greater accuracy at a computational cost.
-/// β(x) = 0.763x²-1.5688x+1.314 
+/// ```Jula
+/// β(x) = 0.763x^2-1.5688x+1.314 
+/// ```
 /// 
 /// \[1\] N.Mikami et al., A new DSP-oriented algorithm for calculation of square root using a non-linear digital filter, IEEE Trans. on Signal Processing, July 1992, pp. 1663-1669.
-/// \[2\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
 /// 
+/// \[2\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
 /// 
 /// ## Arguments 
 ///
@@ -28,7 +33,7 @@
 /// let mut y = sqrt::niirf(x, 2);
 /// assert_eq!{ y.to_num::<f32>(), 0.47960657f32 };
 /// 
-/// x =  FixedI32::<U28>::from_num(1.6);
+/// x = FixedI32::<U28>::from_num(1.6);
 /// y = sqrt::niirf(x, 2);
 /// assert_eq!{ y.to_num::<f32>(), 1.2644687f32 };
 /// ``` 
