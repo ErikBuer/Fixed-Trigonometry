@@ -24,6 +24,7 @@ use fixed;
 
 pub mod complex;
 pub mod atan;
+pub mod sqrt;
 
 /// Rase fixed number to an integer-valued power.
 /// `base^power`.

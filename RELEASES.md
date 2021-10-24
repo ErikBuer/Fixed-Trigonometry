@@ -1,5 +1,9 @@
 # Release Notes
 
+## Release 0.2.1 (2021-10-xx)
+
+- Added the Newton-Raphson Inverse method
+
 ## Release 0.2.0 (2021-10-23)
 
 - Separated out atan approximations to own file.
