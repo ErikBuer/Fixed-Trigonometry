@@ -2,7 +2,7 @@
 
 ## Release 0.2.1 (2021-10-xx)
 
-- Added the Newton-Raphson Inverse method
+- Added the Nonlinear IIR Filter sqrt method.
 
 ## Release 0.2.0 (2021-10-23)
 

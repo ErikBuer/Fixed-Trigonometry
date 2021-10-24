@@ -6,7 +6,7 @@
 /// 
 /// The method is accurat within 0.003 degrees when |θ|<=π/4.
 /// 
-/// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Etition, IEEE Press, 2012.
+/// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
 /// 
 /// ## Arguments 
 ///
@@ -36,7 +36,7 @@ pub fn atan2<T>( y: T, x: T ) -> T
 /// 
 /// The method is accurat within 0.003 degrees when |θ|<=π/4.
 /// 
-/// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Etition, IEEE Press, 2012.
+/// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
 /// 
 /// ## Arguments 
 ///
@@ -61,7 +61,7 @@ pub fn atan<T>( x: T ) -> T
 
 /// Atan polynomial for below function.
 /// 
-/// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Etition, IEEE Press, 2012.
+/// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
 /// 
 /// ## Arguments 
 ///
@@ -80,7 +80,7 @@ fn atan_poly_1<T>( y: T, x: T ) -> T
 
 /// Atan polynomial for below function.
 /// 
-/// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Etition, IEEE Press, 2012.
+/// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
 /// 
 /// ## Arguments 
 ///
@@ -101,7 +101,7 @@ fn atan_poly_2<T>( y: T, x: T ) -> T
 /// 
 /// The method is accurat within 0.028 degrees.
 /// 
-/// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Etition, IEEE Press, 2012.
+/// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
 /// 
 /// ## Arguments 
 ///
