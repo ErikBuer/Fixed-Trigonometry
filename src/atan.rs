@@ -59,6 +59,8 @@ pub fn atan<T>( x: T ) -> T
 }
 
 
+
+
 /// Atan polynomial for below function.
 /// 
 /// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
