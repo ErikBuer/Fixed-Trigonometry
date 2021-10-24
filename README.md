@@ -12,5 +12,11 @@ Release notes are found under RELEASES.md.
 
 ## Functionality
 
-The library currently implements `sin`, `cos` and `atan` for real fixed-point numbers.
-It also has a utility functions `powi` and `complex::powi`.
+The library currently implements:
+
+- `sin`and `cos` using low order polynomails, for real fixed-point numbers.
+- `atan` using multiple numerical methods.
+- `sqrt` using the Nonlinear IIR Filter (NIIRF) method \[1\].
+- `powi` and `complex::powi`.
+
+\[1\] N.Mikami et al., A new DSP-oriented algorithm for calculation of square root using a non-linear digital filter, IEEE Trans. on Signal Processing, July 1992, pp. 1663-1669.

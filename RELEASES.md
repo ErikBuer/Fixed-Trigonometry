@@ -1,6 +1,6 @@
 # Release Notes
 
-## Release 0.2.1 (2021-10-xx)
+## Release 0.2.1 (2021-10-24)
 
 - Added the Nonlinear IIR Filter sqrt method.
 

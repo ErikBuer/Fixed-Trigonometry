@@ -2,12 +2,16 @@
 /// Only valid for positive values of x.
 /// Accurate to 5*10⁻⁴ with two iterations \[2\].
 /// 
+/// The structure of the estimator is illustrated below.
+/// ![Alt version](https://raw.githubusercontent.com/ErikBuer/Fixed-Trigonometry/main/figures/niirf.svg)
+/// 
 /// The method utilizes a lookup-table for the acceleration factor β.
 /// β(x) can be calculated from the following formula, yielding even greater accuracy at a computational cost.
 /// β(x) = 0.763x²-1.5688x+1.314 
 /// 
 /// \[1\] N.Mikami et al., A new DSP-oriented algorithm for calculation of square root using a non-linear digital filter, IEEE Trans. on Signal Processing, July 1992, pp. 1663-1669.
 /// \[2\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
+/// 
 /// 
 /// ## Arguments 
 ///
