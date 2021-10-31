@@ -36,11 +36,20 @@
 /// x = FixedI32::<U28>::from_num(1.6);
 /// y = sqrt::niirf(x, 2);
 /// assert_eq!{ y.to_num::<f32>(), 1.2644687f32 };
+/// 
+/// x = FixedI32::<U28>::from_num(0.0);
+/// y = sqrt::niirf(x, 2);
+/// assert_eq!{ y.to_num::<f32>(), 0.0f32 };
 /// ``` 
 pub fn niirf<T>( x: T, iterations: usize ) -> T 
     where T: fixed::traits::FixedSigned
 {
-    // only wor
+    if x == T::from_num(0)
+    {
+        return T::from_num(0);
+    }
+
+    // Only works with real numbers.
     let mut x_ = x.abs();
 
     // First we normalize x to the range 0.25 =< x < 1.
