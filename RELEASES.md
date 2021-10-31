@@ -1,8 +1,12 @@
 # Release Notes
 
+## Release 0.2.2 (2021-10-31) 2
+
+- Corrected edge case in atan2_fast function.
+
 ## Release 0.2.2 (2021-10-31)
 
-- Corrected edge case in Nonlinear IIR Filter sqrt method.
+- Corrected edge case in Nonlinear IIR Filter sqrt function.
 
 ## Release 0.2.1 (2021-10-24)
 

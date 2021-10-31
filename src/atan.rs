@@ -118,6 +118,9 @@ fn atan_poly_2<T>( y: T, x: T ) -> T
 /// 
 /// let arg = atan::atan2_fast( FixedI32::<U28>::from_num(0.6), FixedI32::<U28>::from_num(0.4) );
 /// assert_eq!{ arg.to_num::<f32>(), 0.9782037 };
+/// 
+/// let arg = atan::atan2_fast( FixedI32::<U28>::from_num(0.0), FixedI32::<U28>::from_num(0.4) );
+/// assert_eq!{ arg.to_num::<f32>(), 0.9782037 };
 /// ``` 
 pub fn atan2_fast<T>( y: T, x: T ) -> T
     where T: fixed::traits::FixedSigned
