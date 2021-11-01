@@ -120,19 +120,38 @@ fn atan_poly_2<T>( y: T, x: T ) -> T
 /// assert_eq!{ arg.to_num::<f32>(), 0.9782037 };
 /// 
 /// let arg = atan::atan2_fast( FixedI32::<U28>::from_num(0.0), FixedI32::<U28>::from_num(0.4) );
-/// assert_eq!{ arg.to_num::<f32>(), 0.9782037 };
+/// assert_eq!{ arg.to_num::<f32>(), 0.0 };
+/// 
+/// let arg = atan::atan2_fast( FixedI32::<U28>::from_num(0.0), FixedI32::<U28>::from_num(0.0) );
+/// assert_eq!{ arg.to_num::<f32>(), 0.0 };
 /// ``` 
 pub fn atan2_fast<T>( y: T, x: T ) -> T
     where T: fixed::traits::FixedSigned
 {
     // Precompute
-    let y_abs = y.abs(); 
-    let x_abs = x.abs(); 
+    let y_abs = y.abs();
+    let x_abs = x.abs();
 
     // Check which quadrant the result will land in.
-    if y.is_positive()
+
+    if  y == 0
     {
-        if x.is_positive()
+        if  x.is_negative()
+        {
+            return T::from_num( fixed::consts::PI );
+        }
+        else
+        {
+            return T::from_num( 0 );
+        }
+    }
+    else if y.is_positive()
+    {
+        if  x == 0
+        {
+            return T::from_num( fixed::consts::PI/2 );
+        }
+        else if x.is_positive()
         {
             // First octant.
             if y_abs - x_abs < T::from_num( 0.0 )
@@ -164,6 +183,10 @@ pub fn atan2_fast<T>( y: T, x: T ) -> T
     }
     else
     {
+        if  x == 0
+        {
+            return -T::from_num( fixed::consts::PI/2 );
+        }
         if x.is_positive()
         {
             // Fifth octant.

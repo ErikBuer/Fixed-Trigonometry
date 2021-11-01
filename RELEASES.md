@@ -1,8 +1,9 @@
 # Release Notes
 
-## Release 0.2.2 (2021-10-31) 2
+## Release 0.2.3 (2021-11-01)
 
 - Corrected edge case in atan2_fast function.
+- Removed dependency to fixed-sqrt.
 
 ## Release 0.2.2 (2021-10-31)
 
