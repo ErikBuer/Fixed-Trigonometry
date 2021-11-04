@@ -18,5 +18,6 @@ The library currently implements:
 - `atan` using multiple numerical methods.
 - `sqrt` using the Nonlinear IIR Filter (NIIRF) method \[1\].
 - `powi` and `complex::powi`.
+- no-std utilities for complex numbers.
 
 \[1\] N.Mikami et al., A new DSP-oriented algorithm for calculation of square root using a non-linear digital filter, IEEE Trans. on Signal Processing, July 1992, pp. 1663-1669.
