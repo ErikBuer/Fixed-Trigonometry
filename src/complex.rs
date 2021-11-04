@@ -1,5 +1,118 @@
 use super::*;
 
+use num::complex::Complex;
+use fixed::traits::Fixed;
+use fixed::traits::FixedSigned;
+
+/// Cast cartesian complex fixed point number to polar form.
+/// 
+/// ## Arguments
+/// 
+/// * `x` - The number transform.
+/// 
+pub fn to_polar<T>( x: Complex<T> ) -> Polar<T>
+    where T: FixedSigned
+{
+    let c_polar = Polar::<T>{
+        r:     abs(x),
+        theta: atan::atan2_fast( x.im, x.re )
+    };
+    return c_polar;
+}
+
+/// Calculate the absolute value of the argument.
+/// 
+/// ## Arguments
+/// 
+/// * `a` - The argument to apply the function to.
+/// 
+pub fn abs<T>( a: Complex<T> ) -> T
+where T: FixedSigned
+{
+    let r_sqr = super::powi( a.re, 2) + super::powi( a.im, 2);
+    //return r_sqr.sqrt();
+    return sqrt::niirf(r_sqr, 2);
+}
+
+/// Polar complex nuber.
+pub struct Polar<T> {
+    pub r: T,
+    pub theta: T,
+}
+
+/// Cast cartesian complex fixed point number to polar form.
+/// 
+/// ## Arguments
+/// 
+/// * `a` - The number transform.
+/// 
+pub fn to_cartsian<T>( a: Polar<T> ) -> Complex<T>
+    where T: FixedSigned
+{
+    let theta = wrap_phase(a.theta);
+    let c_cartesian = Complex::<T>{
+        re: a.r*cos(theta),
+        im: a.r*sin(theta)
+    };
+    return c_cartesian;
+}
+
+/// Add two complex fixed-point numbers in cartesian form.
+pub fn add<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
+    where T: Fixed
+{
+    let c_cartesian = Complex::<T>{
+        re: a.re + b.re,
+        im: a.im + b.im
+    };
+    return c_cartesian;
+}
+
+/// Subtract b from a.
+/// c = a-b
+pub fn sub<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
+    where T: Fixed
+{
+    let c_cartesian = Complex::<T>{
+        re: a.re - b.re,
+        im: a.im - b.im
+    };
+    return c_cartesian;
+}
+
+/// Multiply fixed-point complex numbers in polar form.
+pub fn mul_polar<T>( a: Polar<T>, b: Polar<T> ) -> Polar<T>
+    where T: FixedSigned
+{
+    if a.r==0 || b.r==0
+    {
+        let c = Polar::<T>{
+            r:     T::from_num(0),
+            theta: T::from_num(0)
+        };
+        return c;
+    }
+    else
+    {
+        let c = Polar::<T>{
+            r:     a.r*b.r,
+            theta: a.theta+b.theta
+        };
+        return c;
+    }
+}
+
+/// Multiply two polar numbers by transforming to polar, multiplying and transfomring back.
+pub fn mul_cartesian<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
+    where T: FixedSigned
+{
+    let a_pol = to_polar(a);
+    let b_pol = to_polar(b);
+
+    let c_pol = mul_polar(a_pol, b_pol);
+    return to_cartsian(c_pol);
+}
+
 /// Rase a complex fixed-point number to an real-valued integer power.
 /// `base^power`.
 /// 

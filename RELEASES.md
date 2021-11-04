@@ -1,5 +1,10 @@
 # Release Notes
 
+## Release 0.2.4 (2021-11-04)
+
+- Added complex polar form with conversion to num::complex::Complex.
+- Added abs, add, sub, mul for num::complex::Complex numbers for no-std environments.
+
 ## Release 0.2.3 (2021-11-01)
 
 - Corrected edge case in atan2_fast function.
