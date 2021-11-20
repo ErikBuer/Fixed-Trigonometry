@@ -115,9 +115,11 @@ pub fn sign<T>( x:T ) -> T
 /// y = sin(x);
 /// assert_eq!{ y.to_num::<f32>(), 1.0000036 };
 /// ``` 
-/// ## Comparisons
 /// 
-/// The figure below shows the comparison between the various implementations and the `std::f32::atan` implementation.
+/// ## Comparison and Error
+/// 
+/// The figure below shows the comparison between the polynomial sine, and the `std::f32::sin` implementation.
+/// The Difference between the two is plotted as the error.
 /// 
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/polynomial_sine_comparison.png?raw=true)
 pub fn sin<T>( x: T ) -> T
@@ -172,6 +174,14 @@ pub fn sin<T>( x: T ) -> T
 /// y = cos(x);
 /// assert_eq!{ y.to_num::<f32>(), 0.020923615 };
 /// ``` 
+/// 
+/// ## Comparison and Error
+/// 
+/// The figure below shows the comparison between the polynomial cosine, and the `std::f32::cos` implementation.
+/// The Difference between the two is plotted as the error.
+/// 
+/// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/polynomial_cosine_comparison.png?raw=true)
+/// 
 fn cos_poly<T>(x:T) -> T
     where T: fixed::traits::FixedSigned
 {
