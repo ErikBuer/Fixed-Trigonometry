@@ -1,6 +1,6 @@
 # Release Notes
 
-## Release 0.2.7 (2021-11-20)
+## Release 0.2.7 (2021-11-??)
 
 - Added ifft implementation.
 
