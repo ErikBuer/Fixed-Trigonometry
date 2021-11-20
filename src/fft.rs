@@ -132,27 +132,7 @@ fn _order<T>( f1: &mut Vec<Complex<T>> )
     }    
 }
 
-
-/// Butterfly computation for decimate-in-frequeny.
-/// 
-/// ## Arguments
-/// 
-/// * `a` - input/output.
-/// * `b` - input/output.
-/// * `w` - twiddle factor.
-/// 
-fn butterfly_df<T>( a: &mut Complex<T>, b: &mut Complex<T>, w:Complex<T> )
-    where T: FixedSigned
-{
-    let temp_a = crate::complex::add(*a,*b);
-    //  let temp_b = complex::mul_cartesian(complex::sub(*a, complex::scale_cartesian(T::from_num(2), *b)), w);
-    let temp_b = crate::complex::mul_cartesian(crate::complex::sub(*a, *b), w);
-    
-    *a = temp_a;
-    *b = temp_b;
-}
-
-/// Calculate the Raddix-2 FFT for fixed point numbers.
+/// Calculate the Raddix-2 FFT for fixed point vectors.
 /// Scaled for each butterfly computation.
 /// Requires input size to be a power of two.
 /// 
@@ -188,6 +168,79 @@ fn butterfly_df<T>( a: &mut Complex<T>, b: &mut Complex<T>, w:Complex<T> )
 pub fn fft<T>( vec: &mut Vec<Complex<T>> )
     where T: FixedSigned
 {
+    // Process fft.
+    fft_processor(vec, T::from_num(1));
+
+    // Decimation-in-freqency.
+    bitreverse_array_order(vec); // Bitreverse order
+}
+
+/// Calculate the Raddix-2 Inverse FFT for fixed point vectors.
+/// Scaled for each butterfly computation.
+/// Requires input size to be a power of two.
+/// 
+/// Computed-in-place.
+/// Decimation-in-freqency.
+/// 
+/// The method utilizes fixed point approximations for square root, sine, cosine and atan calculations.
+/// 
+/// ## Arguments
+/// 
+/// * `vec` - A mutable reference to the vector to do the computation on, and store the result in.
+/// 
+/// ## Example
+/// 
+/// ```
+/// use fixed_trigonometry::fft::*;
+/// 
+/// use fixed::FixedI32 as F;
+/// use fixed::types::extra::U22 as U;
+/// use num::complex::Complex;
+/// 
+/// const N:usize = 4;
+/// let mut arr  = vec![ Complex::<F<U>>::new(F::<U>::from_num(1), F::<U>::from_num(0) ); N  ];
+///
+/// arr[3].re = F::<U>::from_num(0);
+/// 
+/// ifft( &mut arr );
+/// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(0.75),       F::<U>::from_num(0)          ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.0100546),  F::<U>::from_num(0.2503753)  ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.250376),   F::<U>::from_num(0.0)        ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(-0.014555),  F::<U>::from_num(-0.2507296) )] );
+/// ```
+pub fn ifft<T>( vec: &mut Vec<Complex<T>> )
+    where T: FixedSigned
+{
+    // Process fft.
+    fft_processor(vec, T::from_num(-1));
+    // Decimation-in-freqency.
+    bitreverse_array_order(vec); // Bitreverse order
+}
+
+/// Butterfly computation for decimate-in-frequeny.
+/// 
+/// ## Arguments
+/// 
+/// * `a` - input/output.
+/// * `b` - input/output.
+/// * `w` - twiddle factor.
+/// 
+fn butterfly_df<T>( a: &mut Complex<T>, b: &mut Complex<T>, w:Complex<T> )
+    where T: FixedSigned
+{
+    let temp_a = crate::complex::add(*a,*b);
+    //  let temp_b = complex::mul_cartesian(complex::sub(*a, complex::scale_cartesian(T::from_num(2), *b)), w);
+    let temp_b = crate::complex::mul_cartesian(crate::complex::sub(*a, *b), w);
+    
+    *a = temp_a;
+    *b = temp_b;
+}
+
+/// Shared fft processor for fft and ifft.
+/// Requires bit-reversion afterwards.
+fn fft_processor<T>( vec: &mut Vec<Complex<T>>, dir: T )
+    where T: FixedSigned
+{
     let n = vec.len();
 
     // Create heap-allocated vector
@@ -196,7 +249,7 @@ pub fn fft<T>( vec: &mut Vec<Complex<T>> )
     // Calculate Twiddle factor W.
     w.push( Complex::new( <T>::from_num(1), <T>::from_num(0) ) );
 
-    let angle:T = (-<T>::from_num(fixed::consts::TAU)) >> log2(n) as u32;
+    let angle:T = (dir*-<T>::from_num(fixed::consts::TAU)) >> log2(n) as u32;
     for i in 1..n/2
     {
         // Calculate twiddle factor for W_i.
@@ -240,8 +293,4 @@ pub fn fft<T>( vec: &mut Vec<Complex<T>> )
         num_blocks = num_blocks * 2;
         num_butt   = num_butt / 2;
     }
-
-    // Decimation-in-freqency.
-    //order(vec);    // Bitreverse order
-    bitreverse_array_order(vec); // Bitreverse order
 }
