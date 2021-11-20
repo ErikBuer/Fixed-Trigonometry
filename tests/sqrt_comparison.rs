@@ -24,7 +24,7 @@ fn compare_sqrt() -> Result<(), Box<dyn std::error::Error>>
     // Draws a sinle line
     chart
         .draw_series(LineSeries::new(
-            (-500..=500).map(|x| x as f32 / 500.0).map(|x| (x, sqrt::niirf(F::<U>::from_num(x), 6).to_num::<f32>() )),
+            (-500..=500).map(|x| x as f32 / 500.0).map(|x| (x, sqrt::niirf(F::<U>::from_num(x), 2).to_num::<f32>() )),
             &RED,
         ))?
         .label("NIIRF")
