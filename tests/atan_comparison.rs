@@ -27,10 +27,19 @@ fn atan_comparison() -> Result<(), Box<dyn std::error::Error>>
     root.fill(&WHITE)?;
     let mut chart = ChartBuilder::on(&root)
         //.caption("title", ("sans-serif", 25).into_font())
-        .margin(5)
-        .x_label_area_size(30)
-        .y_label_area_size(30)
+        .margin(10)
+        .x_label_area_size(40)
+        .y_label_area_size(50)
         .build_cartesian_2d( -PI..PI, -PI..PI)?;
+
+    chart
+        .configure_mesh()
+        .disable_x_mesh()
+        .bold_line_style(&WHITE.mix(0.3))
+        .y_desc("atan2( Im{e^(iθ)) , Re{e^(iθ))} )")
+        .x_desc("θ")
+        .axis_desc_style(("sans-serif", 15))
+        .draw()?;
 
     chart.configure_mesh().draw()?;
     /*
@@ -62,7 +71,7 @@ fn atan_comparison() -> Result<(), Box<dyn std::error::Error>>
         .label("error*1000")
         .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &BLUE));
     */
-
+        
     chart
         .configure_series_labels()
         .background_style(&WHITE.mix(0.8))

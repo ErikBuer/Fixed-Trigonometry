@@ -2,6 +2,7 @@
 
 ## Release 0.2.5 (2021-11-??)
 
+- Corrected error in niirf for certain octants.
 - Added comparison figure, between the std::f32::sqrt and fixed_trigonometry::sqrt::niirf implementations.
 - Added comparison figure, between the various atan appriximations.
 
