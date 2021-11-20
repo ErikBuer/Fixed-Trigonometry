@@ -1,5 +1,9 @@
 # Release Notes
 
+## Release 0.2.6 (2021-11-20)
+
+- Added fft implementation.
+
 ## Release 0.2.5 (2021-11-20)
 
 - Corrected error in niirf for certain octants.

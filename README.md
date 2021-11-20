@@ -14,6 +14,7 @@ Release notes are found under RELEASES.md.
 
 The library currently implements:
 
+- `fft` calculation, for complex fixed-point vectors.
 - `sin` and `cos` using low order polynomails, for real fixed-point numbers.
 - `atan` using multiple numerical methods.
 - `sqrt` using the Nonlinear IIR Filter (NIIRF) method \[1\].

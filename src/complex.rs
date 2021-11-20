@@ -149,3 +149,23 @@ pub fn powi<T>( base: num::complex::Complex<T>, power:usize ) -> num::complex::C
 
     return num::complex::Complex::new( real, imag);
 }
+
+/// divide a cartesian complex by a real scalar.
+/// c = a/b
+pub fn div_cartesian<T>( a: Complex<T>, b: T  ) -> Complex<T>
+    where T: FixedSigned
+{
+    let mut c = a;
+
+    if b == 0
+    {
+        c.re = T::MAX;
+        c.im = T::MAX;
+    }
+    else
+    {
+        c.re = a.re / b;
+        c.im = a.im / b;
+    }
+    return c;
+}
