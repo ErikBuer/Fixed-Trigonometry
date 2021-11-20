@@ -24,6 +24,7 @@ fixed = "1.10.0"
 
 [dev-dependencies]
 plotters = "^0.3.1"
+cordic   = "0.1.5"
 
 [dependencies.num]
 version = "0.4"

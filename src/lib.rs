@@ -122,6 +122,10 @@ pub fn sign<T>( x:T ) -> T
 /// The Difference between the two is plotted as the error.
 /// 
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/polynomial_sine_comparison.png?raw=true)
+/// 
+/// The error of the method is compared to the sine implementation in the cordic crate.
+/// 
+/// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/cordic_poly_sine_error_comparison.png?raw=true)
 pub fn sin<T>( x: T ) -> T
     where T: fixed::traits::FixedSigned
 {
@@ -149,16 +153,15 @@ pub fn sin<T>( x: T ) -> T
     return sinx;
 }
 
-
-/// Non-corrected polynomial cos funciton.
+/// Calculate cosine using a Taylor approximation of `cos(x)`.
 /// 
-/// `cos(x) = 1 -( x^2/2 )+( x^4/24 )-( x^6/720 )+( x^8/40320 )`
+/// Cos is calculated by adding a phase shift to x and running it through the polynomial sine method.
 /// 
 /// ## Argument
 /// 
 /// * `x` - The value to apply the operation to.
 /// 
-/// `x` must be wrapped to the -π/2=<x<π/2 range.
+/// `x` is wrapped to the -π=<x<π range in the function.
 /// 
 /// ## Example
 /// 
@@ -168,7 +171,7 @@ pub fn sin<T>( x: T ) -> T
 /// 
 /// let mut x = FixedI32::<U18>::from_num(0);
 /// let mut y = cos(x);
-/// assert_eq!{ y.to_num::<f32>(), 1.0 };
+/// assert_eq!{ y.to_num::<f32>(), 1.0000038 };
 /// 
 /// x = FixedI32::<U18>::from_num(3.1415/2.0);
 /// y = cos(x);
@@ -182,70 +185,15 @@ pub fn sin<T>( x: T ) -> T
 /// 
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/polynomial_cosine_comparison.png?raw=true)
 /// 
-fn cos_poly<T>(x:T) -> T
-    where T: fixed::traits::FixedSigned
-{
-    let mut cosx = <T>::from_num(1);
-    cosx -= powi(x,2) >> 1;
-    cosx += (powi(x,4)/<T>::from_num(6))   >> 2;
-    cosx -= (powi(x,6)/<T>::from_num(45))  >> 16;
-    cosx += (powi(x,8)/<T>::from_num(315)) >> 7;
-    return cosx;
-}
-
-/// Calculate cosine using a Taylor approximation of `cos(x)`.
-/// 
-/// Cos is calculated using the following polynomial:
-/// 
-/// `cos(x) = 1 -( x^2/2 )+( x^4/24 )-( x^6/720 )+( x^8/40320 )`
-/// 
-/// ## Argument
-/// 
-/// * `x` - The value to apply the operation to.
-/// 
-/// `x` must be wrapped to the -π=<x<π range.
-/// 
-/// ## Example
-/// 
-/// ```
-/// use fixed_trigonometry::*;
-/// use fixed::{types::extra::U18, FixedI32};
-/// 
-/// let mut x = FixedI32::<U18>::from_num(0);
-/// let mut y = cos(x);
-/// assert_eq!{ y.to_num::<f32>(), 1.0 };
-/// 
-/// x = FixedI32::<U18>::from_num(3.1415/2.0);
-/// y = cos(x);
-/// assert_eq!{ y.to_num::<f32>(), 0.020923615 };
-/// ``` 
 pub fn cos<T>( x: T ) -> T
     where T: fixed::traits::FixedSigned
 {
-    let pi_half:T = <T>::from_num(fixed::consts::PI/2);
+    // shift to enable use of more accurate sinepolynomial method.
+    let pi_half = <T>::from_num(fixed::consts::PI/2);
 
-    let mut x_: T = x;
-    let cosx:T;
-
-    // Ensure that the angle is within the accurate range of the tailor series. 
-    if x < -pi_half
-    {   
-        let delta = x+pi_half;
-        x_ = -pi_half+delta.abs();
-        cosx = -cos_poly(x_);
-
-    }
-    else if pi_half < x
-    {
-        let delta = x-pi_half;
-        x_ = pi_half-delta.abs();
-        cosx = -cos_poly(x_);
-    }
-    else
-    {
-        cosx = cos_poly(x_);
-    }
-    return cosx;
+    let mut x_shifted = x+pi_half;
+    x_shifted = wrap_phase(x_shifted);
+    return sin(x_shifted);
 }
 
 /// Wrapps θ to the -π=<x<π range.
@@ -274,11 +222,11 @@ pub fn wrap_phase<T>( phi: T ) -> T
     
     while temp_scalar < -pi
     {
-        temp_scalar = temp_scalar+(tau);
+        temp_scalar = temp_scalar + tau;
     }
     while pi <= temp_scalar
     {
-        temp_scalar = temp_scalar-(tau);
+        temp_scalar = temp_scalar - tau;
     }
     return temp_scalar;
 }

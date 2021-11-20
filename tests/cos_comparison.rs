@@ -54,10 +54,10 @@ fn compare_polynomial_sine() -> Result<(), Box<dyn std::error::Error>>
     // Draws a sinle line
     chart
         .draw_series(LineSeries::new(
-            (-500..=500).map(|x| x as f32 *PI / 500.0).map(|x| (x, 10.0*f32::abs(x.cos()-cos( F::<U>::from_num(x) ).to_num::<f32>()) )),
+            (-500..=500).map(|x| x as f32 *PI / 500.0).map(|x| (x, 100000.0*f32::abs(x.cos()-cos( F::<U>::from_num(x) ).to_num::<f32>()) )),
             &GREEN,
         ))?
-        .label("error*10")
+        .label("error*100 000")
         .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &GREEN));
 
     chart
