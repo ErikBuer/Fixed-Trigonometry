@@ -160,10 +160,10 @@ fn _order<T>( f1: &mut Vec<Complex<T>> )
 /// arr[3].re = F::<U>::from_num(0);
 /// 
 /// fft( &mut arr );
-/// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(0.75),       F::<U>::from_num(0)          ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(-0.0100546), F::<U>::from_num(-0.2503753) ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.250376),   F::<U>::from_num(0.0)        ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.0145547),  F::<U>::from_num(0.2507293)  )] );
+/// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(0.75),      F::<U>::from_num(0)         ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.0),       F::<U>::from_num(-0.250378) ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.2503767), F::<U>::from_num(0.0)       ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.0),       F::<U>::from_num(0.25074)   )] );
 /// ```
 pub fn fft<T>( vec: &mut Vec<Complex<T>> )
     where T: FixedSigned
@@ -203,10 +203,10 @@ pub fn fft<T>( vec: &mut Vec<Complex<T>> )
 /// arr[3].re = F::<U>::from_num(0);
 /// 
 /// ifft( &mut arr );
-/// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(0.75),       F::<U>::from_num(0)          ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.0100546),  F::<U>::from_num(0.2503753)  ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.250376),   F::<U>::from_num(0.0)        ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(-0.014555),  F::<U>::from_num(-0.2507296) )] );
+/// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(0.75),       F::<U>::from_num(0.0)   ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.0),  F::<U>::from_num(0.2503777)   ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.2503767,),   F::<U>::from_num(0.0) ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(-0.0),  F::<U>::from_num(-0.2507398) )] );
 /// ```
 pub fn ifft<T>( vec: &mut Vec<Complex<T>> )
     where T: FixedSigned

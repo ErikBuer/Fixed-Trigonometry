@@ -175,7 +175,7 @@ pub fn sin<T>( x: T ) -> T
 /// 
 /// x = FixedI32::<U18>::from_num(3.1415/2.0);
 /// y = cos(x);
-/// assert_eq!{ y.to_num::<f32>(), 0.020923615 };
+/// assert_eq!{ y.to_num::<f32>(), 0.00004196167 };
 /// ``` 
 /// 
 /// ## Comparison and Error
