@@ -1,6 +1,6 @@
 [package]
 name = "fixed_trigonometry"
-version = "0.2.6"
+version = "0.2.7"
 edition = "2018"
 authors = ["Erik Buer"]
 description = "Fixed point numerical approimations to trigonometric functions."
@@ -8,6 +8,7 @@ readme = "README.md"
 repository = "https://github.com/ErikBuer/Fixed-Trigonometry"
 license-file = "LICENSE"
 keywords = ["dsp", "no_std"]
+exclude = ["figures/"]
 
 [lib]
 name  = "fixed_trigonometry"

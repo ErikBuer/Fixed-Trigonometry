@@ -89,7 +89,7 @@ pub fn sign<T>( x:T ) -> T
     }
 }
 
-/// Calculate sine using a Taylor approximation of `sin(x)`.
+/// Calculate sin(x) using a Taylor approximation of `sin(x)`.
 /// 
 /// Sin is calculated using the following polynomial:
 /// 
@@ -124,6 +124,8 @@ pub fn sign<T>( x:T ) -> T
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/polynomial_sine_comparison.png?raw=true)
 /// 
 /// The error of the method is compared to the sine implementation in the cordic crate.
+/// 
+/// The figure below is missing numbers on the y axis, but it is plotted on a linear scale, showing the relative error between the two methods.
 /// 
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/cordic_poly_sine_error_comparison.png?raw=true)
 pub fn sin<T>( x: T ) -> T

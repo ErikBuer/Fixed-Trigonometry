@@ -3,6 +3,8 @@
 ## Release 0.2.7 (2021-11-??)
 
 - Added ifft implementation.
+- Improved cos implementation by utilizing the more accurate sin polynomial.
+- Added accuracy comparison for cosine and sine.
 
 ## Release 0.2.6 (2021-11-20)
 

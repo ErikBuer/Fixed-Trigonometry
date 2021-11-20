@@ -81,14 +81,14 @@ fn poly_vs_cordic_error() -> Result<(), Box<dyn std::error::Error>>
     use fixed::types::extra::U20 as U;
     use std::f32::consts::PI as PI;
 
-    let root = BitMapBackend::new("figures/cordic_poly_sine_error_comparison.png", (1000, 500)).into_drawing_area();
+    let root = BitMapBackend::new("figures/cordic_poly_sine_error_comparison.png", (1000, 300)).into_drawing_area();
     root.fill(&WHITE)?;
     let mut chart = ChartBuilder::on(&root)
         //.caption("title", ("sans-serif", 25).into_font())
         .margin(10)
         .x_label_area_size(40)
-        .y_label_area_size(100)
-        .build_cartesian_2d( -PI..PI, 0f32..0.00001f32 )?;
+        .y_label_area_size(50)
+        .build_cartesian_2d( -PI..PI, 0f32..1e-5f32 )?;
 
     chart
         .configure_mesh()
