@@ -1,6 +1,6 @@
 # Release Notes
 
-## Release 0.2.5 (2021-11-??)
+## Release 0.2.5 (2021-11-20)
 
 - Corrected error in niirf for certain octants.
 - Added comparison figure, between the std::f32::sqrt and fixed_trigonometry::sqrt::niirf implementations.
