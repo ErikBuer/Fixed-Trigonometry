@@ -115,6 +115,11 @@ pub fn sign<T>( x:T ) -> T
 /// y = sin(x);
 /// assert_eq!{ y.to_num::<f32>(), 1.0000036 };
 /// ``` 
+/// ## Comparisons
+/// 
+/// The figure below shows the comparison between the various implementations and the `std::f32::atan` implementation.
+/// 
+/// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/polynomial_sine_comparison.png?raw=true)
 pub fn sin<T>( x: T ) -> T
     where T: fixed::traits::FixedSigned
 {

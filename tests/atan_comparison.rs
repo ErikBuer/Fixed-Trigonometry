@@ -41,9 +41,9 @@ fn atan_comparison() -> Result<(), Box<dyn std::error::Error>>
         .label("atan::atan2_fast")
         .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RED));
 
-        let std_atan_series = LineSeries::new(
-        (-500..=500).map(|x| x as f32 *PI / 500.0).map(|x| (x, f32::atan2(x.sin(),x.cos()) )),
-        &BLUE);
+    let std_atan_series = LineSeries::new(
+    (-500..=500).map(|x| x as f32 *PI / 500.0).map(|x| (x, f32::atan2(x.sin(),x.cos()) )),
+    &BLUE);
 
     // Draws a sinle line
     chart
