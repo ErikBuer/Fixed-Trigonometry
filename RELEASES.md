@@ -1,5 +1,10 @@
 # Release Notes
 
+## Release 0.2.5 (2021-11-??)
+
+- Added comparison figure, between the std::f32::sqrt and fixed_trigonometry::sqrt::niirf implementations.
+- Added comparison figure, between the various atan appriximations.
+
 ## Release 0.2.4 (2021-11-04)
 
 - Added complex polar form with conversion to num::complex::Complex.

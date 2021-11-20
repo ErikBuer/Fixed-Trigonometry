@@ -125,6 +125,12 @@ fn atan_poly_2<T>( y: T, x: T ) -> T
 /// let arg = atan::atan2_fast( FixedI32::<U28>::from_num(0.0), FixedI32::<U28>::from_num(0.0) );
 /// assert_eq!{ arg.to_num::<f32>(), 0.0 };
 /// ``` 
+/// 
+/// ## Comparisons
+/// 
+/// The figure below shows the comparison between the various implementations and the std-lib f32::atan implementation.
+/// 
+/// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/atan_comparisons.png?raw=true)
 pub fn atan2_fast<T>( y: T, x: T ) -> T
     where T: fixed::traits::FixedSigned
 {
@@ -162,7 +168,7 @@ pub fn atan2_fast<T>( y: T, x: T ) -> T
             else
             {
                 let pi_half = <T>::from_num( fixed::consts::PI/2 );
-                return pi_half -atan_poly_2( y, x );
+                return pi_half - atan_poly_2( y, x );
             }
         }
         else
@@ -171,7 +177,7 @@ pub fn atan2_fast<T>( y: T, x: T ) -> T
             if T::from_num( 0.0 ) <= y_abs - x_abs
             {
                 let pi_half = <T>::from_num( fixed::consts::PI/2 );
-                return pi_half -atan_poly_2( y, x );
+                return pi_half - atan_poly_2( y, x );
             }
             // Fourth octant.
             else
@@ -199,7 +205,7 @@ pub fn atan2_fast<T>( y: T, x: T ) -> T
             else
             {
                 let pi_half = <T>::from_num( fixed::consts::PI );
-                return - pi_half -atan_poly_2( y, x );
+                return - pi_half - atan_poly_2( y, x );
             }
         }
         else
@@ -208,7 +214,7 @@ pub fn atan2_fast<T>( y: T, x: T ) -> T
             if T::from_num( 0.0 ) <= y_abs - x_abs
             {
                 let pi_half = <T>::from_num( fixed::consts::PI );
-                return - pi_half -atan_poly_2( y, x );
+                return - pi_half - atan_poly_2( y, x );
             }
             // Eigth octant.
             else
