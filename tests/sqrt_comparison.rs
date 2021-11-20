@@ -10,7 +10,7 @@ fn compare_sqrt() -> Result<(), Box<dyn std::error::Error>>
     use fixed::FixedI32 as F;
     use fixed::types::extra::U29 as U;
 
-    let root = BitMapBackend::new("figures/compare_sqrt.png", (1000, 600)).into_drawing_area();
+    let root = BitMapBackend::new("figures/compare_sqrt.png", (800, 500)).into_drawing_area();
     root.fill(&WHITE)?;
     let mut chart = ChartBuilder::on(&root)
         //.caption("Square root comparison", ("sans-serif", 50).into_font())

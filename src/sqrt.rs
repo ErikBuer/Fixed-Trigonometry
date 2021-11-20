@@ -41,6 +41,13 @@
 /// y = sqrt::niirf(x, 2);
 /// assert_eq!{ y.to_num::<f32>(), 0.0f32 };
 /// ``` 
+/// 
+/// ## Accuracy and Comparison
+/// 
+/// The figure below shows the comparison between the NIIRF implementation and the std-lib f32::sqrt implementation.
+/// The Difference between the two is plotted as the error.
+/// 
+/// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/niirf_sqrt_comparison.png?raw=true)
 pub fn niirf<T>( x: T, iterations: usize ) -> T 
     where T: fixed::traits::FixedSigned
 {
