@@ -138,8 +138,10 @@ pub fn atan2_fast<T>( y: T, x: T ) -> T
     let y_abs = y.abs();
     let x_abs = x.abs();
 
-    // Check which quadrant the result will land in.
+    let pi      = <T>::from_num( fixed::consts::PI );
+    let pi_half = <T>::from_num( fixed::consts::PI/2 );
 
+    // Check which quadrant the result will land in.
     if  y == 0
     {
         if  x.is_negative()
@@ -167,8 +169,7 @@ pub fn atan2_fast<T>( y: T, x: T ) -> T
             // Second octant.
             else
             {
-                let pi_half = <T>::from_num( fixed::consts::PI/2 );
-                return pi_half - atan_poly_2( y, x );
+                return pi_half -atan_poly_2( y, x );
             }
         }
         else
@@ -176,14 +177,12 @@ pub fn atan2_fast<T>( y: T, x: T ) -> T
             // Third octant.
             if T::from_num( 0.0 ) <= y_abs - x_abs
             {
-                let pi_half = <T>::from_num( fixed::consts::PI/2 );
                 return pi_half - atan_poly_2( y, x );
             }
             // Fourth octant.
             else
             {
-                let pi = <T>::from_num( fixed::consts::PI );
-                return super::sign(y)*pi*atan_poly_1( y, x );
+                return pi + atan_poly_1( y, x );
             }
         }
     }
@@ -198,14 +197,12 @@ pub fn atan2_fast<T>( y: T, x: T ) -> T
             // Fifth octant.
             if y_abs - x_abs < T::from_num( 0.0 )
             {
-                let pi = <T>::from_num( fixed::consts::PI );
-                return super::sign(y)*pi*atan_poly_1( y, x );
+                return atan_poly_1( y, x );
             }
             // Sixth octant.
             else
             {
-                let pi_half = <T>::from_num( fixed::consts::PI );
-                return - pi_half - atan_poly_2( y, x );
+                return - pi_half -atan_poly_2( y, x );
             }
         }
         else
@@ -213,13 +210,12 @@ pub fn atan2_fast<T>( y: T, x: T ) -> T
             // Seventh octant.
             if T::from_num( 0.0 ) <= y_abs - x_abs
             {
-                let pi_half = <T>::from_num( fixed::consts::PI );
-                return - pi_half - atan_poly_2( y, x );
+                return -pi_half - atan_poly_2( y, x );
             }
             // Eigth octant.
             else
             {
-                return atan_poly_1( y, x );
+                return -pi + atan_poly_1( y, x );
             }
         }
     }
