@@ -16,7 +16,7 @@ The library currently implements:
 
 - `fft`/`ifft` calculation, for complex fixed-point vectors.
 - `sin` and `cos` using low order polynomails, for real fixed-point numbers.
-- `atan` using multiple numerical methods.
+- `atan` using numerical methods.
 - `sqrt` using the Nonlinear IIR Filter (NIIRF) method.
 - `powi` and `complex::powi`.
 - no-std utilities for complex numbers.
