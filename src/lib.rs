@@ -125,9 +125,12 @@ pub fn sign<T>( x:T ) -> T
 /// 
 /// The error of the method is compared to the sine implementation in the cordic crate.
 /// 
+/// The comparison is done for U22 unsigned fixed point.
+/// 
 /// The figure below is missing numbers on the y axis, but it is plotted on a linear scale, showing the relative error between the two methods.
 /// 
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/cordic_poly_sine_error_comparison.png?raw=true)
+/// 
 pub fn sin<T>( x: T ) -> T
     where T: fixed::traits::FixedSigned
 {
@@ -186,6 +189,14 @@ pub fn sin<T>( x: T ) -> T
 /// The Difference between the two is plotted as the error.
 /// 
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/polynomial_cosine_comparison.png?raw=true)
+/// 
+/// The error of the method is compared to the sine implementation in the cordic crate.
+/// 
+/// The comparison is done for U22 unsigned fixed point.
+/// 
+/// The figure below is missing numbers on the y axis, but it is plotted on a linear scale, showing the relative error between the two methods.
+/// 
+/// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/cordic_poly_cos_error_comparison.png?raw=true)
 /// 
 pub fn cos<T>( x: T ) -> T
     where T: fixed::traits::FixedSigned

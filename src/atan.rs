@@ -1,66 +1,3 @@
-/// Calculate atan(y/x) using a polynomial approximation of `atan(y/x)`.
-/// 
-/// Utilizes the following polynomial to estimate the angle θ \[radians\].
-/// 
-/// `atan(y,x) = ((y,x)+0.372003(y,x)^3) / (1+0.703384(y/x)^2 + 0.043562(y/x)^4)`
-/// 
-/// The method is accurat within 0.003 degrees when |θ|<=π/4.
-/// 
-/// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
-/// 
-/// ## Arguments 
-///
-/// * `y` - Is the argument along the y or imaginary axis.
-/// * `x` - Is the argument along the x or real axis.
-/// 
-/// ## Example
-/// 
-/// ```
-/// use fixed_trigonometry::*;
-/// use fixed::{types::extra::U28, FixedI32};
-/// let arg = atan::atan2( FixedI32::<U28>::from_num(0.6), FixedI32::<U28>::from_num(0.4) );
-/// assert_eq!{ arg.to_num::<f32>(), 0.983006064 };
-/// ``` 
-pub fn atan2<T>( y: T, x: T ) -> T
-    where T: fixed::traits::FixedSigned
-{
-    let division: T = y/x;
-    return atan(division);
-}
-
-/// Calculate atan(x) using a polynomial approximation of `atan(x)`.
-/// 
-/// Utilizes the following polynomial to estimate the angle θ \[radians\].
-/// 
-/// `atan(x) = (x+0.372003*x^3) / (1+0.703384*x^2 + 0.043562*x^4)`
-/// 
-/// The method is accurat within 0.003 degrees when |θ|<=π/4.
-/// 
-/// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
-/// 
-/// ## Arguments 
-///
-/// * `x` - Is the function argument.
-/// 
-/// ## Example
-/// 
-/// ```
-/// use fixed_trigonometry::*;
-/// use fixed::{types::extra::U28, FixedI32};
-/// 
-/// let arg = atan::atan( FixedI32::<U28>::from_num(0.6)/FixedI32::<U28>::from_num(0.4) );
-/// assert_eq!{ arg.to_num::<f32>(), 0.983006064 };
-/// ``` 
-pub fn atan<T>( x: T ) -> T
-    where T: fixed::traits::FixedSigned
-{
-    return ( (x) + T::from_num(0.372003f32)*super::powi(x,3) ) 
-            / (T::from_num(1) + T::from_num(0.703384f32)*super::powi(x,2) + T::from_num(0.043562f32)*super::powi(x,4) );
-}
-
-
-
-
 /// Atan polynomial for below function.
 /// 
 /// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
@@ -99,6 +36,7 @@ fn atan_poly_2<T>( y: T, x: T ) -> T
     return phi;
 }
 
+
 /// Calculate atan2(y,x) using a selection of polynomial approximations, one for each octant in the unit circle.
 /// 
 /// The method is accurat within 0.028 degrees.
@@ -130,8 +68,8 @@ fn atan_poly_2<T>( y: T, x: T ) -> T
 /// 
 /// The figure below shows the comparison between the various implementations and the `std::f32::atan` implementation.
 /// 
-/// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/atan_comparisons.png?raw=true)
-pub fn atan2_fast<T>( y: T, x: T ) -> T
+/// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/atan2_comparisons.png?raw=true)
+pub fn atan2<T>( y: T, x: T ) -> T
     where T: fixed::traits::FixedSigned
 {
     // Precompute
@@ -219,4 +157,39 @@ pub fn atan2_fast<T>( y: T, x: T ) -> T
             }
         }
     }
+}
+
+/// Calculate atan(x) using a polynomial approximation of `atan(x)`.
+/// 
+/// Utilizes the following polynomial to estimate the angle θ \[radians\].
+/// 
+/// `atan(x) = (x+0.372003*x^3) / (1+0.703384*x^2 + 0.043562*x^4)`
+/// 
+/// The method is accurat within 0.003 degrees when |θ|<=π/4.
+/// 
+/// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
+/// 
+/// ## Arguments 
+///
+/// * `x` - Is the function argument.
+/// 
+/// ## Example
+/// 
+/// ```
+/// use fixed_trigonometry::*;
+/// use fixed::{types::extra::U28, FixedI32};
+/// 
+/// let arg = atan::atan( FixedI32::<U28>::from_num(0.6)/FixedI32::<U28>::from_num(0.4) );
+/// assert_eq!{ arg.to_num::<f32>(), 0.983006064 };
+/// ``` 
+/// ## Comparisons
+/// 
+/// The figure below shows the comparison between the various implementations and the `std::f32::atan` implementation.
+/// 
+/// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/atan_comparisons.png?raw=true)
+/// 
+pub fn atan<T>( x: T ) -> T
+    where T: fixed::traits::FixedSigned
+{
+    return atan2(x,T::from_num(1));
 }

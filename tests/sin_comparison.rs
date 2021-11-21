@@ -78,7 +78,7 @@ fn poly_vs_cordic_error() -> Result<(), Box<dyn std::error::Error>>
     use fixed_trigonometry::*;
 
     use fixed::FixedI32 as F;
-    use fixed::types::extra::U20 as U;
+    use fixed::types::extra::U22 as U;
     use std::f32::consts::PI as PI;
 
     let root = BitMapBackend::new("figures/cordic_poly_sine_error_comparison.png", (1000, 300)).into_drawing_area();
@@ -88,7 +88,7 @@ fn poly_vs_cordic_error() -> Result<(), Box<dyn std::error::Error>>
         .margin(10)
         .x_label_area_size(40)
         .y_label_area_size(50)
-        .build_cartesian_2d( -PI..PI, 0f32..1e-5f32 )?;
+        .build_cartesian_2d( -PI..PI, 0f32..5e-6f32 )?;
 
     chart
         .configure_mesh()

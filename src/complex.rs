@@ -15,7 +15,7 @@ pub fn to_polar<T>( x: Complex<T> ) -> Polar<T>
 {
     let c_polar = Polar::<T>{
         r:     abs(x),
-        theta: atan::atan2_fast( x.im, x.re )
+        theta: atan::atan2( x.im, x.re )
     };
     return c_polar;
 }
