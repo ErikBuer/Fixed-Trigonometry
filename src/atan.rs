@@ -161,11 +161,7 @@ pub fn atan2<T>( y: T, x: T ) -> T
 
 /// Calculate atan(x) using a polynomial approximation of `atan(x)`.
 /// 
-/// Utilizes the following polynomial to estimate the angle θ \[radians\].
-/// 
-/// `atan(x) = (x+0.372003*x^3) / (1+0.703384*x^2 + 0.043562*x^4)`
-/// 
-/// The method is accurat within 0.003 degrees when |θ|<=π/4.
+/// Utilizes a polynomial methodto estimate the angle θ \[radians\].
 /// 
 /// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
 /// 
