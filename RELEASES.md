@@ -1,10 +1,12 @@
 # Release Notes
 
-## Release 0.2.7 (2021-11-??)
+## Release 0.3.0 (2021-11-??)
 
 - Added ifft implementation.
 - Improved cos implementation by utilizing the more accurate sin polynomial.
 - Added accuracy comparison for cosine and sine.
+- Moved the atan2 implementation to the main atan2.
+- atan now utilizes the atan2 function.
 
 ## Release 0.2.6 (2021-11-20)
 
@@ -23,7 +25,7 @@
 
 ## Release 0.2.3 (2021-11-01)
 
-- Corrected edge case in atan2_fast function.
+- Corrected edge case in atan2 function.
 - Removed dependency to fixed-sqrt.
 
 ## Release 0.2.2 (2021-10-31)

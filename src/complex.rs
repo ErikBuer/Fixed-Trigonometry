@@ -132,7 +132,7 @@ pub fn mul_cartesian<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
 /// let x = Complex::new( FixedI32::<U22>::from_num(1), FixedI32::<U22>::from_num(1) );
 /// let y = trig::complex::powi( x, 2 );
 /// 
-/// let result = Complex::new( FixedI32::<U22>::from_num( 0.0001032 ), FixedI32::<U22>::from_num( 1.996042 ));
+/// let result = Complex::new( FixedI32::<U22>::from_num( -0.019602, ), FixedI32::<U22>::from_num( 1.995946 ));
 /// assert_eq!{ y, result };
 /// ```
 pub fn powi<T>( base: num::complex::Complex<T>, power:usize ) -> num::complex::Complex<T>

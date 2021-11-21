@@ -3,12 +3,12 @@ use plotters::prelude::*;
 
 /// Plots comparison between various atan implementations.
 #[test]
-fn atan2_fast_comparison() -> Result<(), Box<dyn std::error::Error>> 
+fn atan2_comparison() -> Result<(), Box<dyn std::error::Error>> 
 {
     use fixed_trigonometry::*;
 
     use fixed::FixedI32 as F;
-    use fixed::types::extra::U20 as U;
+    use fixed::types::extra::U28 as U;
     use std::f32::consts::PI as PI;
 
     let root = BitMapBackend::new("figures/atan2_comparisons.png", (1000, 500)).into_drawing_area();
@@ -31,13 +31,13 @@ fn atan2_fast_comparison() -> Result<(), Box<dyn std::error::Error>>
 
     chart.configure_mesh().draw()?;
 
-    let atan2_fast_series = LineSeries::new(
+    let atan2_series = LineSeries::new(
         (-500..=500).map(|x| x as f32 *PI / 500.0).map(|x| (x, atan::atan2(F::<U>::from_num(x.sin()), F::<U>::from_num(x.cos()) ).to_num::<f32>() )),
         &RED);
 
     // Draws a sinle line
     chart
-        .draw_series( atan2_fast_series )?
+        .draw_series( atan2_series )?
         .label("atan::atan2")
         .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RED));
 
@@ -66,7 +66,7 @@ fn atan_comparison() -> Result<(), Box<dyn std::error::Error>>
     use fixed_trigonometry::*;
 
     use fixed::FixedI32 as F;
-    use fixed::types::extra::U20 as U;
+    use fixed::types::extra::U22 as U;
     use std::f32::consts::PI as PI;
 
     let root = BitMapBackend::new("figures/atan_comparisons.png", (1000, 500)).into_drawing_area();
@@ -89,13 +89,13 @@ fn atan_comparison() -> Result<(), Box<dyn std::error::Error>>
 
     chart.configure_mesh().draw()?;
 
-    let atan2_fast_series = LineSeries::new(
+    let atan2_series = LineSeries::new(
         (-500..=500).map(|x| x as f32 *10.0 / 500.0).map(|x| (x, atan::atan( F::<U>::from_num(x) ).to_num::<f32>() )),
         &RED);
 
     // Draws a sinle line
     chart
-        .draw_series( atan2_fast_series )?
+        .draw_series( atan2_series )?
         .label("atan::atan")
         .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RED));
 

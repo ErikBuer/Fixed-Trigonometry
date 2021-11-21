@@ -10,7 +10,7 @@
 //! use fixed::{types::extra::U28, FixedI32};
 //! 
 //! let arg = atan::atan( FixedI32::<U28>::from_num(0.6)/FixedI32::<U28>::from_num(0.4) );
-//! assert_eq!{ arg.to_num::<f32>(), 0.983006064 };
+//! assert_eq!{ arg.to_num::<f32>(), 0.9782037 };
 //! ``` 
 
 #![crate_name = "fixed_trigonometry"]

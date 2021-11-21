@@ -54,13 +54,13 @@ fn atan_poly_2<T>( y: T, x: T ) -> T
 /// use fixed_trigonometry::*;
 /// use fixed::{types::extra::U28, FixedI32};
 /// 
-/// let arg = atan::atan2_fast( FixedI32::<U28>::from_num(0.6), FixedI32::<U28>::from_num(0.4) );
+/// let arg = atan::atan2( FixedI32::<U28>::from_num(0.6), FixedI32::<U28>::from_num(0.4) );
 /// assert_eq!{ arg.to_num::<f32>(), 0.9782037 };
 /// 
-/// let arg = atan::atan2_fast( FixedI32::<U28>::from_num(0.0), FixedI32::<U28>::from_num(0.4) );
+/// let arg = atan::atan2( FixedI32::<U28>::from_num(0.0), FixedI32::<U28>::from_num(0.4) );
 /// assert_eq!{ arg.to_num::<f32>(), 0.0 };
 /// 
-/// let arg = atan::atan2_fast( FixedI32::<U28>::from_num(0.0), FixedI32::<U28>::from_num(0.0) );
+/// let arg = atan::atan2( FixedI32::<U28>::from_num(0.0), FixedI32::<U28>::from_num(0.0) );
 /// assert_eq!{ arg.to_num::<f32>(), 0.0 };
 /// ``` 
 /// 
@@ -180,7 +180,7 @@ pub fn atan2<T>( y: T, x: T ) -> T
 /// use fixed::{types::extra::U28, FixedI32};
 /// 
 /// let arg = atan::atan( FixedI32::<U28>::from_num(0.6)/FixedI32::<U28>::from_num(0.4) );
-/// assert_eq!{ arg.to_num::<f32>(), 0.983006064 };
+/// assert_eq!{ arg.to_num::<f32>(), 0.9782037 };
 /// ``` 
 /// ## Comparisons
 /// 
