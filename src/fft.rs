@@ -91,46 +91,11 @@ fn bitreverse_order<T>( arr: &mut Vec<T> )
     }
 }
 
-/// Calculating revers number
-fn _reverse( n_capital: usize, n: usize ) -> usize
-{
-  let mut p: usize = 0;
-  
-    for j in 1..=log2(n_capital)
-    {
-        if(n & (1 << (log2(n_capital) - j))) != 0
-        {
-            p |= 1 << (j - 1);
-        }
-    }
-  return p;
-}
-
-/// Using the reverse order in the array
-fn _order<T>( f1: &mut Vec<Complex<T>> ) 
-    where T: Copy
-{
-    // Create a copy of f1.
-    let mut f2 = Vec::<Complex<T>>::with_capacity( f1.len() );
-
-    for i in 0..f1.len()
-    {
-        f2.push( f1[_reverse(f1.len(), i)] );
-    }
-    for j in 0..f1.len()
-    {
-        f1[j] = f2[j];
-    }    
-}
-
 /// Calculate the Raddix-2 FFT for fixed point vectors.
-/// Scaled for each butterfly computation.
-/// Requires input size to be a power of two.
-/// 
-/// Computed-in-place.
-/// Decimation-in-freqency.
-/// 
-/// The method utilizes fixed point approximations for square root, sine, cosine and atan calculations.
+/// - Scaled for each butterfly computation.
+/// - Requires input size to be a power of two.
+/// - Computed-in-place.
+/// - Decimation-in-freqency.
 /// 
 /// ## Arguments
 /// 
@@ -167,11 +132,10 @@ pub fn fft<T>( vec: &mut Vec<Complex<T>> )
 }
 
 /// Calculate the Raddix-2 Inverse FFT for fixed point vectors.
-/// Scaled for each butterfly computation.
-/// Requires input size to be a power of two.
-/// 
-/// Computed-in-place.
-/// Decimation-in-freqency.
+/// - Scaled for each butterfly computation.
+/// - Requires input size to be a power of two.
+/// - Computed-in-place.
+/// - Decimation-in-freqency.
 /// 
 /// The method utilizes fixed point approximations for square root, sine, cosine and atan calculations.
 /// 
