@@ -61,16 +61,7 @@ pub fn log2( x: usize ) -> usize
 /// 
 /// * `arr` - A mutable reference to the array to do the computation on, and store the result in.
 /// 
-/// ## Example
-/// 
-/// ```
-/// use fixed_trigonometry::fft::*;
-///
-/// let mut arr =  vec![0,1,2,3,4,5,6,7];
-/// bitreverse_array_order::<i32>(&mut arr);
-/// assert_eq!( arr, [0,4,2,6,1,5,3,7] );
-/// ```
-pub fn bitreverse_array_order<T>( arr: &mut Vec<T> )
+fn bitreverse_order<T>( arr: &mut Vec<T> )
     where T: core::marker::Copy
 {
     let n:usize = arr.len();
@@ -172,7 +163,7 @@ pub fn fft<T>( vec: &mut Vec<Complex<T>> )
     fft_processor(vec, T::from_num(1));
 
     // Decimation-in-freqency.
-    bitreverse_array_order(vec); // Bitreverse order
+    bitreverse_order(vec); // Bitreverse order
 }
 
 /// Calculate the Raddix-2 Inverse FFT for fixed point vectors.
@@ -214,7 +205,7 @@ pub fn ifft<T>( vec: &mut Vec<Complex<T>> )
     // Process fft.
     fft_processor(vec, T::from_num(-1));
     // Decimation-in-freqency.
-    bitreverse_array_order(vec); // Bitreverse order
+    bitreverse_order(vec); // Bitreverse order
 }
 
 /// Butterfly computation for decimate-in-frequeny.
