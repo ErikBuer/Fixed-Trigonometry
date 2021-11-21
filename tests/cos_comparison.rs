@@ -3,7 +3,7 @@ use plotters::prelude::*;
 
 /// Plots comparison between various sqrt implementations.
 #[test]
-fn compare_polynomial_sine() -> Result<(), Box<dyn std::error::Error>> 
+fn compare_polynomial_cosine() -> Result<(), Box<dyn std::error::Error>> 
 {
     use fixed_trigonometry::*;
 
