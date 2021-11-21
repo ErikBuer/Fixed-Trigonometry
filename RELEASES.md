@@ -1,6 +1,6 @@
 # Release Notes
 
-## Release 0.3.0 (2021-11-??)
+## Release 0.3.0 (2021-11-21)
 
 - Added ifft implementation.
 - Improved cos implementation by utilizing the more accurate sin polynomial.

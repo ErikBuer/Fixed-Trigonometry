@@ -125,7 +125,7 @@ pub fn sign<T>( x:T ) -> T
 /// 
 /// The error of the method is compared to the sine implementation in the cordic crate.
 /// 
-/// The comparison is done for U22 unsigned fixed point.
+/// The comparison is done for U22 signed fixed point.
 /// 
 /// The figure below is missing numbers on the y axis, but it is plotted on a linear scale, showing the relative error between the two methods.
 /// 
@@ -192,7 +192,7 @@ pub fn sin<T>( x: T ) -> T
 /// 
 /// The error of the method is compared to the sine implementation in the cordic crate.
 /// 
-/// The comparison is done for U22 unsigned fixed point.
+/// The comparison is done for U22 signed fixed point.
 /// 
 /// The figure below is missing numbers on the y axis, but it is plotted on a linear scale, showing the relative error between the two methods.
 /// 
