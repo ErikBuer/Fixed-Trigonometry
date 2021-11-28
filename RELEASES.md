@@ -2,7 +2,7 @@
 
 ## Release 0.3.1 (2021-11-??)
 
-- ...
+- Implemented the cordic in the fft twiddle factor computation to allow greater precision.  
 
 ## Release 0.3.0 (2021-11-21)
 
