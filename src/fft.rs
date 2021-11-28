@@ -4,6 +4,8 @@ use fixed::traits::FixedSigned;
 extern crate alloc;
 use alloc::vec::Vec;
 
+use cordic;
+
 use num::complex::Complex;
 
 /// Check if x is a power of two.
@@ -97,6 +99,8 @@ fn bitreverse_order<T>( arr: &mut Vec<T> )
 /// - Computed-in-place.
 /// - Decimation-in-freqency.
 /// 
+/// The function computes the twiddle factor each time it is called, which is suboptimal for repeating computations.
+/// 
 /// ## Arguments
 /// 
 /// * `vec` - A mutable reference to the vector to do the computation on, and store the result in.
@@ -107,7 +111,7 @@ fn bitreverse_order<T>( arr: &mut Vec<T> )
 /// use fixed_trigonometry::fft::*;
 /// 
 /// use fixed::FixedI32 as F;
-/// use fixed::types::extra::U22 as U;
+/// use fixed::types::extra::U28 as U;
 /// use num::complex::Complex;
 /// 
 /// const N:usize = 4;
@@ -122,7 +126,7 @@ fn bitreverse_order<T>( arr: &mut Vec<T> )
 ///                         Complex::<F<U>>::new(F::<U>::from_num(0.0),       F::<U>::from_num(0.25074)   )] );
 /// ```
 pub fn fft<T>( vec: &mut Vec<Complex<T>> )
-    where T: FixedSigned
+    where T: FixedSigned + cordic::CordicNumber
 {
     // Process fft.
     fft_processor(vec, T::from_num(1));
@@ -137,7 +141,7 @@ pub fn fft<T>( vec: &mut Vec<Complex<T>> )
 /// - Computed-in-place.
 /// - Decimation-in-freqency.
 /// 
-/// The method utilizes fixed point approximations for square root, sine, cosine and atan calculations.
+/// The function computes the twiddle factor each time it is called, which is suboptimal for repeating computations.
 /// 
 /// ## Arguments
 /// 
@@ -149,7 +153,7 @@ pub fn fft<T>( vec: &mut Vec<Complex<T>> )
 /// use fixed_trigonometry::fft::*;
 /// 
 /// use fixed::FixedI32 as F;
-/// use fixed::types::extra::U22 as U;
+/// use fixed::types::extra::U28 as U;
 /// use num::complex::Complex;
 /// 
 /// const N:usize = 4;
@@ -164,7 +168,7 @@ pub fn fft<T>( vec: &mut Vec<Complex<T>> )
 ///                         Complex::<F<U>>::new(F::<U>::from_num(-0.0),  F::<U>::from_num(-0.2507398) )] );
 /// ```
 pub fn ifft<T>( vec: &mut Vec<Complex<T>> )
-    where T: FixedSigned
+    where T: FixedSigned + cordic::CordicNumber
 {
     // Process fft.
     fft_processor(vec, T::from_num(-1));
@@ -181,7 +185,7 @@ pub fn ifft<T>( vec: &mut Vec<Complex<T>> )
 /// * `w` - twiddle factor.
 /// 
 fn butterfly_df<T>( a: &mut Complex<T>, b: &mut Complex<T>, w:Complex<T> )
-    where T: FixedSigned
+    where T: FixedSigned + cordic::CordicNumber
 {
     let temp_a = crate::complex::add(*a,*b);
     //  let temp_b = complex::mul_cartesian(complex::sub(*a, complex::scale_cartesian(T::from_num(2), *b)), w);
@@ -194,7 +198,7 @@ fn butterfly_df<T>( a: &mut Complex<T>, b: &mut Complex<T>, w:Complex<T> )
 /// Shared fft processor for fft and ifft.
 /// Requires bit-reversion afterwards.
 fn fft_processor<T>( vec: &mut Vec<Complex<T>>, dir: T )
-    where T: FixedSigned
+    where T: FixedSigned + cordic::CordicNumber
 {
     let n = vec.len();
 
@@ -205,11 +209,16 @@ fn fft_processor<T>( vec: &mut Vec<Complex<T>>, dir: T )
     w.push( Complex::new( <T>::from_num(1), <T>::from_num(0) ) );
 
     let angle:T = (dir*-<T>::from_num(fixed::consts::TAU)) >> log2(n) as u32;
-    for i in 1..n/2
+    let mut phase_inc = angle;
+    for _i in 1..n/2
     {
         // Calculate twiddle factor for W_i.
-        let real = crate::cos( <T>::from_num(i) *angle );
-	    let imag = crate::sin( <T>::from_num(i) *angle );
+        //let real = crate::cos( phase_inc );
+        let real = cordic::cos( phase_inc );
+	    //let imag = crate::sin( phase_inc );
+	    let imag = cordic::sin( phase_inc );
+
+        phase_inc = phase_inc+angle;
 
         w.push( Complex::new( real, imag ) );
     }

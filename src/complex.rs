@@ -47,12 +47,12 @@ pub struct Polar<T> {
 /// * `a` - The number transform.
 /// 
 pub fn to_cartsian<T>( a: Polar<T> ) -> Complex<T>
-    where T: FixedSigned
+    where T: FixedSigned + cordic::CordicNumber
 {
     let theta = wrap_phase(a.theta);
     let c_cartesian = Complex::<T>{
-        re: a.r*cos(theta),
-        im: a.r*sin(theta)
+        re: a.r*cordic::cos(theta),
+        im: a.r*cordic::sin(theta)
     };
     return c_cartesian;
 }
@@ -104,7 +104,7 @@ pub fn mul_polar<T>( a: Polar<T>, b: Polar<T> ) -> Polar<T>
 
 /// Multiply two polar numbers by transforming to polar, multiplying and transfomring back.
 pub fn mul_cartesian<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
-    where T: FixedSigned
+    where T: FixedSigned + cordic::CordicNumber
 {
     let a_pol = to_polar(a);
     let b_pol = to_polar(b);
