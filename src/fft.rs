@@ -120,10 +120,10 @@ fn bitreverse_order<T>( arr: &mut Vec<T> )
 /// arr[3].re = F::<U>::from_num(0);
 /// 
 /// fft( &mut arr );
-/// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(0.75),      F::<U>::from_num(0)         ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.0),       F::<U>::from_num(-0.250378) ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.2503767), F::<U>::from_num(0.0)       ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.0),       F::<U>::from_num(0.25074)   )] );
+/// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(0.75),            F::<U>::from_num(0)            ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(-0.000000004,),   F::<U>::from_num(-0.250376098) ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.250376098),     F::<U>::from_num(0.0)          ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(-0.000000007),    F::<U>::from_num(0.25073779)   )] );
 /// ```
 pub fn fft<T>( vec: &mut Vec<Complex<T>> )
     where T: FixedSigned + cordic::CordicNumber
@@ -162,10 +162,10 @@ pub fn fft<T>( vec: &mut Vec<Complex<T>> )
 /// arr[3].re = F::<U>::from_num(0);
 /// 
 /// ifft( &mut arr );
-/// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(0.75),       F::<U>::from_num(0.0)   ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.0),  F::<U>::from_num(0.2503777)   ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.2503767,),   F::<U>::from_num(0.0) ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(-0.0),  F::<U>::from_num(-0.2507398) )] );
+/// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(0.75),         F::<U>::from_num(0.0)      ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(-0.000000004), F::<U>::from_num(0.2503761)),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.250376098),  F::<U>::from_num(0.0)      ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.00000001),   F::<U>::from_num(-0.2507378) )] );
 /// ```
 pub fn ifft<T>( vec: &mut Vec<Complex<T>> )
     where T: FixedSigned + cordic::CordicNumber
@@ -213,10 +213,8 @@ fn fft_processor<T>( vec: &mut Vec<Complex<T>>, dir: T )
     for _i in 1..n/2
     {
         // Calculate twiddle factor for W_i.
-        //let real = crate::cos( phase_inc );
-        let real = cordic::cos( phase_inc );
-	    //let imag = crate::sin( phase_inc );
-	    let imag = cordic::sin( phase_inc );
+        
+        let (imag, real) = cordic::sin_cos( phase_inc );
 
         phase_inc = phase_inc+angle;
 

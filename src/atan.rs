@@ -70,7 +70,7 @@ fn atan_poly_2<T>( y: T, x: T ) -> T
 /// 
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/atan2_comparisons.png?raw=true)
 pub fn atan2<T>( y: T, x: T ) -> T
-    where T: fixed::traits::FixedSigned
+    where T: fixed::traits::FixedSigned + cordic::CordicNumber
 {
     // Precompute
     let y_abs = y.abs();
@@ -185,7 +185,7 @@ pub fn atan2<T>( y: T, x: T ) -> T
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/atan_comparisons.png?raw=true)
 /// 
 pub fn atan<T>( x: T ) -> T
-    where T: fixed::traits::FixedSigned
+    where T: fixed::traits::FixedSigned + cordic::CordicNumber
 {
     return atan2(x,T::from_num(1));
 }

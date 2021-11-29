@@ -11,7 +11,7 @@ use fixed::traits::FixedSigned;
 /// * `x` - The number transform.
 /// 
 pub fn to_polar<T>( x: Complex<T> ) -> Polar<T>
-    where T: FixedSigned
+    where T: FixedSigned + cordic::CordicNumber
 {
     let c_polar = Polar::<T>{
         r:     abs(x),
@@ -50,9 +50,11 @@ pub fn to_cartsian<T>( a: Polar<T> ) -> Complex<T>
     where T: FixedSigned + cordic::CordicNumber
 {
     let theta = wrap_phase(a.theta);
+    let (imag_s, real_s) = cordic::sin_cos( theta );
+
     let c_cartesian = Complex::<T>{
-        re: a.r*cordic::cos(theta),
-        im: a.r*cordic::sin(theta)
+        re: a.r*real_s,
+        im: a.r*imag_s
     };
     return c_cartesian;
 }
@@ -132,11 +134,11 @@ pub fn mul_cartesian<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
 /// let x = Complex::new( FixedI32::<U22>::from_num(1), FixedI32::<U22>::from_num(1) );
 /// let y = trig::complex::powi( x, 2 );
 /// 
-/// let result = Complex::new( FixedI32::<U22>::from_num( -0.019602, ), FixedI32::<U22>::from_num( 1.995946 ));
+/// let result = Complex::new( FixedI32::<U22>::from_num( -0.019603, ), FixedI32::<U22>::from_num( 1.9959388 ));
 /// assert_eq!{ y, result };
 /// ```
 pub fn powi<T>( base: num::complex::Complex<T>, power:usize ) -> num::complex::Complex<T>
-    where T: fixed::traits::FixedSigned
+    where T: fixed::traits::FixedSigned + cordic::CordicNumber
 {   
     // Calculate raised magnitude.
     let temp:T = super::powi( base.re, 2 ) + super::powi( base.im, 2 );
@@ -144,8 +146,10 @@ pub fn powi<T>( base: num::complex::Complex<T>, power:usize ) -> num::complex::C
 
     let phi:T  = super::atan::atan2( base.im, base.re )*<T>::from_num(power);
 
-    let real   = mag*super::cos(phi);
-    let imag   = mag*super::sin(phi);
+    let (imag_s, real_s) = cordic::sin_cos( phi );
+
+    let real   = mag*real_s;
+    let imag   = mag*imag_s;
 
     return num::complex::Complex::new( real, imag);
 }
