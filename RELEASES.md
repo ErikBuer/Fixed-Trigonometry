@@ -2,7 +2,7 @@
 
 ## Release 0.3.1 (2021-11-29)
 
-- Implemented the cordic in various sin and cos calculations allow greater precision.
+- Implemented the cordic crate. It is used in various sin and cos calculations allow greater precision.
 
 ## Release 0.3.0 (2021-11-21)
 
