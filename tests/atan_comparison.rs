@@ -69,8 +69,6 @@ fn atan_comparison() -> Result<(), Box<dyn std::error::Error>>
     use fixed::types::extra::U22 as U;
     use std::f32::consts::PI as PI;
 
-    use cordic;
-
     let root = BitMapBackend::new("figures/atan_comparisons.png", (1000, 500)).into_drawing_area();
     root.fill(&WHITE)?;
     let mut chart = ChartBuilder::on(&root)

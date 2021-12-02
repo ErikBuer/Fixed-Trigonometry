@@ -181,9 +181,13 @@ pub fn atan2<T>( y: T, x: T ) -> T
 /// ``` 
 /// ## Comparisons
 /// 
-/// The figure below shows the comparison between the various implementations and the `std::f32::atan` implementation.
+/// The figure below shows the function curve, and its error compared to the `std::f32::atan` implementation.
 /// 
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/atan_comparisons.png?raw=true)
+/// 
+/// The error of this function is compared to the error of the atan implementation in the cordic crate below.
+/// 
+/// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/atan_error_comparisons.png?raw=true)
 /// 
 pub fn atan<T>( x: T ) -> T
     where T: fixed::traits::FixedSigned + cordic::CordicNumber
