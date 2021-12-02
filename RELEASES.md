@@ -1,5 +1,9 @@
 # Release Notes
 
+## Release 0.3.2 (2021-11-??)
+
+- Added comparison between atan::atan and cordic::atan.
+
 ## Release 0.3.1 (2021-11-29)
 
 - Implemented the cordic crate. It is used in various sin and cos calculations allow greater precision.
