@@ -69,6 +69,7 @@ fn atan_poly_2<T>( y: T, x: T ) -> T
 /// The figure below shows the comparison between the various implementations and the `std::f32::atan` implementation.
 /// 
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/atan2_comparisons.png?raw=true)
+/// 
 pub fn atan2<T>( y: T, x: T ) -> T
     where T: fixed::traits::FixedSigned + cordic::CordicNumber
 {
