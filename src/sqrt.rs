@@ -10,7 +10,7 @@
 /// The method utilizes a lookup-table for the acceleration factor β.
 /// 
 /// β(x) can be calculated from the following formula, yielding even greater accuracy at a computational cost.
-/// ```Jula
+/// ```Julia
 /// β(x) = 0.763x^2-1.5688x+1.314 
 /// ```
 /// 

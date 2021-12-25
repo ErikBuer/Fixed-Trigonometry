@@ -63,7 +63,7 @@ pub fn log2( x: usize ) -> usize
 /// 
 /// * `arr` - A mutable reference to the array to do the computation on, and store the result in.
 /// 
-fn bitreverse_order<T>( arr: &mut Vec<T> )
+fn bitreverse_order<T>( arr: &mut [Complex<T>] )
     where T: core::marker::Copy
 {
     let n:usize = arr.len();
@@ -125,14 +125,14 @@ fn bitreverse_order<T>( arr: &mut Vec<T> )
 ///                         Complex::<F<U>>::new(F::<U>::from_num(0.250376098),     F::<U>::from_num(0.0)          ),
 ///                         Complex::<F<U>>::new(F::<U>::from_num(-0.000000007),    F::<U>::from_num(0.25073779)   )] );
 /// ```
-pub fn fft<T>( vec: &mut Vec<Complex<T>> )
+pub fn fft<T>( array: &mut [Complex<T>] )
     where T: FixedSigned + cordic::CordicNumber
 {
     // Process fft.
-    fft_processor(vec, T::from_num(1));
+    fft_processor(array, T::from_num(1));
 
     // Decimation-in-freqency.
-    bitreverse_order(vec); // Bitreverse order
+    bitreverse_order(array); // Bitreverse order
 }
 
 /// Calculate the Raddix-2 Inverse FFT for fixed point vectors.
@@ -197,10 +197,10 @@ fn butterfly_df<T>( a: &mut Complex<T>, b: &mut Complex<T>, w:Complex<T> )
 
 /// Shared fft processor for fft and ifft.
 /// Requires bit-reversion afterwards.
-fn fft_processor<T>( vec: &mut Vec<Complex<T>>, dir: T )
+fn fft_processor<T>( array: &mut [Complex<T>], dir: T )
     where T: FixedSigned + cordic::CordicNumber
 {
-    let n = vec.len();
+    let n = array.len();
 
     // Create heap-allocated vector
     let mut w = Vec::<Complex<T>>::with_capacity(n/2);
@@ -242,14 +242,14 @@ fn fft_processor<T>( vec: &mut Vec<Complex<T>>, dir: T )
             for j in 0..num_butt
             {
                 // Scale values to avoid overflow.
-                let mut a = crate::complex::div_cartesian( vec[pa+j], T::from_num(2.0) );
-                let mut b = crate::complex::div_cartesian( vec[pb+j], T::from_num(2.0) );
+                let mut a = crate::complex::div_cartesian( array[pa+j], T::from_num(2.0) );
+                let mut b = crate::complex::div_cartesian( array[pb+j], T::from_num(2.0) );
                 let w_temp = w[ stage*j ];
                 
                 butterfly_df( &mut a, &mut b, w_temp );
                 
-                vec[pa+j] = a;
-                vec[pb+j] = b;
+                array[pa+j] = a;
+                array[pb+j] = b;
             }
         }
         num_blocks = num_blocks * 2;

@@ -3,6 +3,7 @@
 ## Release 0.3.2 (2021-11-??)
 
 - Added comparison between atan::atan and cordic::atan.
+- Changed vector argument of fft to `&mut [Complex<T>]`.
 
 ## Release 0.3.1 (2021-11-29)
 
