@@ -44,8 +44,7 @@
 /// 
 /// ## Accuracy and Comparison
 /// 
-/// The figure below shows the comparison between the NIIRF implementation, and `std::f32::sqrt` implementation.
-/// The Difference between the two is plotted as the error.
+/// The figure below shows error of the NIIRF implementation, compared to the `std::f32::sqrt` implementation.
 /// 
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/niirf_sqrt_comparison.png?raw=true)
 pub fn niirf<T>( x: T, iterations: usize ) -> T 

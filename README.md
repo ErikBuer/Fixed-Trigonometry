@@ -18,5 +18,5 @@ The library currently implements:
 - `sin` and `cos` using low order polynomails, for real fixed-point numbers.
 - `atan` using numerical methods.
 - `sqrt` using the Nonlinear IIR Filter (NIIRF) method.
-- `powi` and `complex::powi`.
+- `powi` and `complex::powi` calculation.
 - no-std utilities for complex numbers.
