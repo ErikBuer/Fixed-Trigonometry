@@ -52,7 +52,7 @@
 /// 
 /// Below is the error comparison between the two implementations.
 /// 
-/// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/niirf_sqrt_comparison.png?raw=true)
+/// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/sqrt_error_comparison.png?raw=true)
 pub fn niirf<T>( x: T, iterations: usize ) -> T 
     where T: fixed::traits::FixedSigned
 {
