@@ -1,5 +1,9 @@
 # Release Notes
 
+## Release 0.3.3 (2022-01-xx)
+
+- Changed to Rust 2021.
+
 ## Release 0.3.2 (2022-01-01)
 
 - Added comparison between `atan::atan` and `cordic::atan`.

@@ -1,7 +1,7 @@
 [package]
 name = "fixed_trigonometry"
-version = "0.3.2"
-edition = "2018"
+version = "0.3.3"
+edition = "2021"
 authors = ["Erik Buer"]
 description = "Fixed point numerical approimations to trigonometric functions."
 readme = "README.md"
@@ -11,12 +11,10 @@ keywords = ["dsp", "no_std"]
 exclude = ["figures/"]
 
 [lib]
-name  = "fixed_trigonometry"
 path  = "src/lib.rs"
 bench = false
 doc   = true
 test  = true
-edition    = "2018"
 crate-type = ["lib"]
 
 
