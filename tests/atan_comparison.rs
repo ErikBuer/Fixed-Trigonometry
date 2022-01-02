@@ -1,10 +1,11 @@
 use plotters::prelude::*;
+use fixed_trigonometry::*;
+use mixed_num::*;
 
 /// Plots comparison between various atan implementations.
 #[test]
 fn atan2_comparison() -> Result<(), Box<dyn std::error::Error>> 
 {
-    use fixed_trigonometry::*;
 
     use fixed::FixedI32 as F;
     use fixed::types::extra::U28 as U;
@@ -31,7 +32,7 @@ fn atan2_comparison() -> Result<(), Box<dyn std::error::Error>>
     chart.configure_mesh().draw()?;
 
     let atan2_series = LineSeries::new(
-        (-500..=500).map(|x| x as f32 *PI / 500.0).map(|x| (x, atan::atan2(F::<U>::from_num(x.sin()), F::<U>::from_num(x.cos()) ).to_num::<f32>() )),
+        (-500..=500).map(|x| x as f32 *PI / 500.0).map(|x| (x, atan::atan2(F::<U>::mixed_from_num(x.sin()), F::<U>::mixed_from_num(x.cos()) ).to_num::<f32>() )),
         &RED);
 
     // Draws a sinle line
@@ -63,8 +64,6 @@ fn atan2_comparison() -> Result<(), Box<dyn std::error::Error>>
 #[test]
 fn atan_comparison() -> Result<(), Box<dyn std::error::Error>> 
 {
-    use fixed_trigonometry::*;
-
     use fixed::FixedI32 as F;
     use fixed::types::extra::U22 as U;
     use std::f32::consts::PI as PI;
@@ -97,7 +96,7 @@ fn atan_comparison() -> Result<(), Box<dyn std::error::Error>>
     chart.configure_mesh().draw()?;
 
     let trig_atan_series = LineSeries::new(
-        (-500..=500).map(|x| x as f32 *10.0 / 500.0).map(|x| (x, atan::atan( F::<U>::from_num(x) ).to_num::<f32>() )),
+        (-500..=500).map(|x| x as f32 *10.0 / 500.0).map(|x| (x, atan::atan( F::<U>::mixed_from_num(x) ).to_num::<f32>() )),
         &RED);
 
     // Draws a sinle line
@@ -107,7 +106,7 @@ fn atan_comparison() -> Result<(), Box<dyn std::error::Error>>
         .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RED));
 
     let std_atan_error = LineSeries::new(
-        (-500..=500).map(|x| x as f32 *10.0 / 500.0).map(|x| (x, f32::abs(f32::atan(x) - atan::atan( F::<U>::from_num(x) ).to_num::<f32>()) )),
+        (-500..=500).map(|x| x as f32 *10.0 / 500.0).map(|x| (x, f32::abs(f32::atan(x) - atan::atan( F::<U>::mixed_from_num(x) ).to_num::<f32>()) )),
         &BLUE);
 
     // Draws a sinle line
@@ -129,8 +128,6 @@ fn atan_comparison() -> Result<(), Box<dyn std::error::Error>>
 #[test]
 fn atan_error_comparison() -> Result<(), Box<dyn std::error::Error>> 
 {
-    use fixed_trigonometry::*;
-
     use fixed::FixedI32 as F;
     use fixed::types::extra::U22 as U;
 
@@ -164,7 +161,7 @@ fn atan_error_comparison() -> Result<(), Box<dyn std::error::Error>>
     chart.configure_mesh().draw()?;
 
     let std_atan_error = LineSeries::new(
-        (-500..=500).map(|x| x as f32 *10.0 / 500.0).map(|x| (x, f32::abs(f32::atan(x) - atan::atan( F::<U>::from_num(x) ).to_num::<f32>()) )),
+        (-500..=500).map(|x| x as f32 *10.0 / 500.0).map(|x| (x, f32::abs(f32::atan(x) - atan::atan( F::<U>::mixed_from_num(x) ).to_num::<f32>()) )),
         &RED);
 
     // Draws a sinle line

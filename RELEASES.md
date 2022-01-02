@@ -3,6 +3,7 @@
 ## Release 0.3.3 (2022-01-xx)
 
 - Changed to Rust 2021.
+- Implemented mixed-num trait to add floating point support as well.
 
 ## Release 0.3.2 (2022-01-01)
 

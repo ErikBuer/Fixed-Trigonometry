@@ -11,9 +11,9 @@
 /// 
 /// TODO 
 fn atan_poly_1<T>( y: T, x: T ) -> T
-    where T: fixed::traits::FixedSigned
+    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
 {
-    let phi = (x*y) / ( super::powi(x, 2) + T::from_num( 0.28125 )*super::powi(y, 2) );
+    let phi = (x*y) / ( x.mixed_powi(2) + T::mixed_from_num( 0.28125 )*y.mixed_powi(2) );
     return phi;
 }
 
@@ -30,9 +30,9 @@ fn atan_poly_1<T>( y: T, x: T ) -> T
 /// 
 /// TODO 
 fn atan_poly_2<T>( y: T, x: T ) -> T
-    where T: fixed::traits::FixedSigned
+    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
 {
-    let phi     = (x*y) / ( super::powi(y, 2) + T::from_num( 0.28125 )*super::powi(x, 2) );
+    let phi     = (x*y) / ( super::powi(y, 2) + T::mixed_from_num( 0.28125 )*x.mixed_powi(2) );
     return phi;
 }
 
@@ -71,37 +71,37 @@ fn atan_poly_2<T>( y: T, x: T ) -> T
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/atan2_comparisons.png?raw=true)
 /// 
 pub fn atan2<T>( y: T, x: T ) -> T
-    where T: fixed::traits::FixedSigned + cordic::CordicNumber
+    where T:  mixed_num::MixedNum + mixed_num::MixedNumSigned + cordic::CordicNumber
 {
     // Precompute
-    let y_abs = y.abs();
-    let x_abs = x.abs();
+    let y_abs = y.mixed_abs();
+    let x_abs = x.mixed_abs();
 
-    let pi      = <T>::from_num( fixed::consts::PI );
-    let pi_half = <T>::from_num( fixed::consts::PI/2 );
+    let pi      = T::mixed_pi();
+    let pi_half = T::mixed_pi()/T::mixed_from_num(2);
 
     // Check which quadrant the result will land in.
-    if  y == 0
+    if  y == T::mixed_from_num(0)
     {
-        if  x.is_negative()
+        if  x.mixed_is_negative()
         {
-            return T::from_num( fixed::consts::PI );
+            return T::mixed_pi();
         }
         else
         {
-            return T::from_num( 0 );
+            return T::mixed_from_num( 0 );
         }
     }
-    else if y.is_positive()
+    else if y.mixed_is_positive()
     {
-        if  x == 0
+        if  x == T::mixed_from_num( 0 )
         {
-            return T::from_num( fixed::consts::PI/2 );
+            return T::mixed_pi()/T::mixed_from_num( 2 );
         }
-        else if x.is_positive()
+        else if x.mixed_is_positive()
         {
             // First octant.
-            if y_abs - x_abs < T::from_num( 0.0 )
+            if y_abs - x_abs < T::mixed_from_num( 0.0 )
             {
                 return atan_poly_1( y, x );
             }
@@ -114,7 +114,7 @@ pub fn atan2<T>( y: T, x: T ) -> T
         else
         {
             // Third octant.
-            if T::from_num( 0.0 ) <= y_abs - x_abs
+            if T::mixed_from_num( 0.0 ) <= y_abs - x_abs
             {
                 return pi_half - atan_poly_2( y, x );
             }
@@ -127,14 +127,14 @@ pub fn atan2<T>( y: T, x: T ) -> T
     }
     else
     {
-        if  x == 0
+        if  x == T::mixed_from_num( 0 )
         {
-            return -T::from_num( fixed::consts::PI/2 );
+            return -T::mixed_pi()/T::mixed_from_num( 2 );
         }
-        if x.is_positive()
+        if x.mixed_is_positive()
         {
             // Fifth octant.
-            if y_abs - x_abs < T::from_num( 0.0 )
+            if y_abs - x_abs < T::mixed_from_num( 0.0 )
             {
                 return atan_poly_1( y, x );
             }
@@ -147,7 +147,7 @@ pub fn atan2<T>( y: T, x: T ) -> T
         else
         {
             // Seventh octant.
-            if T::from_num( 0.0 ) <= y_abs - x_abs
+            if T::mixed_from_num( 0.0 ) <= y_abs - x_abs
             {
                 return -pi_half - atan_poly_2( y, x );
             }
@@ -190,7 +190,7 @@ pub fn atan2<T>( y: T, x: T ) -> T
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/atan_error_comparisons.png?raw=true)
 /// 
 pub fn atan<T>( x: T ) -> T
-    where T: fixed::traits::FixedSigned + cordic::CordicNumber
+    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + cordic::CordicNumber
 {
-    return atan2(x,T::from_num(1));
+    return atan2(x,T::mixed_from_num(1));
 }

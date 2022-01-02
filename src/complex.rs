@@ -11,7 +11,7 @@ use fixed::traits::FixedSigned;
 /// * `x` - The number transform.
 /// 
 pub fn to_polar<T>( x: Complex<T> ) -> Polar<T>
-    where T: FixedSigned + cordic::CordicNumber
+    where T:  mixed_num::MixedNum + mixed_num::MixedNumSigned + cordic::CordicNumber
 {
     let c_polar = Polar::<T>{
         r:     abs(x),
@@ -27,7 +27,7 @@ pub fn to_polar<T>( x: Complex<T> ) -> Polar<T>
 /// * `a` - The argument to apply the function to.
 /// 
 pub fn abs<T>( a: Complex<T> ) -> T
-where T: FixedSigned
+where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
 {
     let r_sqr = super::powi( a.re, 2) + super::powi( a.im, 2);
     //return r_sqr.sqrt();
@@ -47,7 +47,7 @@ pub struct Polar<T> {
 /// * `a` - The number transform.
 /// 
 pub fn to_cartsian<T>( a: Polar<T> ) -> Complex<T>
-    where T: FixedSigned + cordic::CordicNumber
+    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + cordic::CordicNumber
 {
     let theta = wrap_phase(a.theta);
     let (imag_s, real_s) = cordic::sin_cos( theta );
@@ -61,7 +61,7 @@ pub fn to_cartsian<T>( a: Polar<T> ) -> Complex<T>
 
 /// Add two complex fixed-point numbers in cartesian form.
 pub fn add<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
-    where T: Fixed
+    where T: mixed_num::MixedNum
 {
     let c_cartesian = Complex::<T>{
         re: a.re + b.re,
@@ -73,7 +73,7 @@ pub fn add<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
 /// Subtract b from a.
 /// c = a-b
 pub fn sub<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
-    where T: Fixed
+    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
 {
     let c_cartesian = Complex::<T>{
         re: a.re - b.re,
@@ -84,13 +84,13 @@ pub fn sub<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
 
 /// Multiply fixed-point complex numbers in polar form.
 pub fn mul_polar<T>( a: Polar<T>, b: Polar<T> ) -> Polar<T>
-    where T: FixedSigned
+    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
 {
-    if a.r==0 || b.r==0
+    if a.r==T::mixed_from_num(0) || b.r==T::mixed_from_num(0)
     {
         let c = Polar::<T>{
-            r:     T::from_num(0),
-            theta: T::from_num(0)
+            r:     T::mixed_from_num(0),
+            theta: T::mixed_from_num(0)
         };
         return c;
     }
@@ -106,7 +106,7 @@ pub fn mul_polar<T>( a: Polar<T>, b: Polar<T> ) -> Polar<T>
 
 /// Multiply two polar numbers by transforming to polar, multiplying and transfomring back.
 pub fn mul_cartesian<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
-    where T: FixedSigned + cordic::CordicNumber
+    where T:  mixed_num::MixedNum + mixed_num::MixedNumSigned + cordic::CordicNumber
 {
     let a_pol = to_polar(a);
     let b_pol = to_polar(b);
@@ -138,7 +138,7 @@ pub fn mul_cartesian<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
 /// assert_eq!{ y, result };
 /// ```
 pub fn powi<T>( base: num::complex::Complex<T>, power:usize ) -> num::complex::Complex<T>
-    where T: fixed::traits::FixedSigned + cordic::CordicNumber
+    where T: fixed::traits::FixedSigned + cordic::CordicNumber + mixed_num::MixedNum + mixed_num::MixedNumSigned
 {   
     // Calculate raised magnitude.
     let temp:T = super::powi( base.re, 2 ) + super::powi( base.im, 2 );
@@ -157,14 +157,14 @@ pub fn powi<T>( base: num::complex::Complex<T>, power:usize ) -> num::complex::C
 /// divide a cartesian complex by a real scalar.
 /// c = a/b
 pub fn div_cartesian<T>( a: Complex<T>, b: T  ) -> Complex<T>
-    where T: FixedSigned
+    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
 {
     let mut c = a;
 
-    if b == 0
+    if b == T::mixed_from_num(0)
     {
-        c.re = T::MAX;
-        c.im = T::MAX;
+        c.re = T::mixed_max_value();
+        c.im = T::mixed_max_value();
     }
     else
     {
