@@ -1,7 +1,6 @@
 use plotters::prelude::*;
 
 
-
 /// Plots comparison error various sqrt implementations.
 #[test]
 fn compare_error_sqrt() -> Result<(), Box<dyn std::error::Error>> 

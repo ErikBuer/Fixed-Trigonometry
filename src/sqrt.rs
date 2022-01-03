@@ -1,5 +1,3 @@
-use mixed_num;
-
 /// A fast implementation of the square root using the Nonlinear IIR Filter (NIIRF) method \[1\].
 /// 
 /// Only valid for positive values of x.
@@ -56,78 +54,78 @@ use mixed_num;
 /// 
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/sqrt_error_comparison.png?raw=true)
 pub fn niirf<T>( x: T, iterations: usize ) -> T 
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
+    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + fixed::traits::FixedSigned
 {
-    if x == T::mixed_from_num(0)
+    if x == T::from_num(0)
     {
-        return T::mixed_from_num(0);
+        return T::from_num(0);
     }
 
     // Only works with real numbers.
-    let mut x_ = x.mixed_abs();
+    let mut x_ = x.abs();
 
     // First we normalize x to the range 0.25 =< x < 1.
     let mut norm:i32 = 0; // Number of normalizations.
-    while x_< T::mixed_from_num(0.25)
+    while x_< T::from_num(0.25)
     {
         norm -=1;
-        x_ = x_*T::mixed_from_num(4);
+        x_ = x_<<2;
     }
-    while T::mixed_from_num(1.0) <= x_
+    while T::from_num(1.0) <= x_
     {
         norm +=1;
-        x_ = x_/T::mixed_from_num(4);
+        x_ = x_>>2;
     }
 
     /// LUT for getting the acceleration factor β.
     fn beta<T>( x: T) -> T
-        where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
+        where T: fixed::traits::FixedSigned
     {   
         // There is one β value for each of the 12 regions in the range 4/16 to 16/16.
-        let beta_values = [  T::mixed_from_num(0.961914),
-                                    T::mixed_from_num(0.840332),
-                                    T::mixed_from_num(0.782715),
-                                    T::mixed_from_num(0.734869),
-                                    T::mixed_from_num(0.691406),
-                                    T::mixed_from_num(0.654297),
-                                    T::mixed_from_num(0.622070),
-                                    T::mixed_from_num(0.595215),
-                                    T::mixed_from_num(0.573731),
-                                    T::mixed_from_num(0.556152),
-                                    T::mixed_from_num(0.516113),
-                                    T::mixed_from_num(0.502930)];
+        let beta_values = [ T::from_num(0.961914),
+                            T::from_num(0.840332),
+                            T::from_num(0.782715),
+                            T::from_num(0.734869),
+                            T::from_num(0.691406),
+                            T::from_num(0.654297),
+                            T::from_num(0.622070),
+                            T::from_num(0.595215),
+                            T::from_num(0.573731),
+                            T::from_num(0.556152),
+                            T::from_num(0.516113),
+                            T::from_num(0.502930)];
 
-        if x < T::mixed_from_num(5.0/16.0) {
+        if x < T::from_num(5.0/16.0) {
             return beta_values[0];
         }
-        else if x < T::mixed_from_num(6.0/16.0) {
+        else if x < T::from_num(6.0/16.0) {
             return beta_values[1];
         }
-        else if x < T::mixed_from_num(7.0/16.0) {
+        else if x < T::from_num(7.0/16.0) {
             return beta_values[2];
         }
-        else if x < T::mixed_from_num(8.0/16.0) {
+        else if x < T::from_num(8.0/16.0) {
             return beta_values[3];
         }
-        else if x < T::mixed_from_num(9.0/16.0) {
+        else if x < T::from_num(9.0/16.0) {
             return beta_values[4];
         }
-        else if x < T::mixed_from_num(10.0/16.0) {
+        else if x < T::from_num(10.0/16.0) {
             return beta_values[5];
         }
-        else if x < T::mixed_from_num(11.0/16.0) {
+        else if x < T::from_num(11.0/16.0) {
             return beta_values[6];
         }
-        else if x < T::mixed_from_num(12.0/16.0) {
+        else if x < T::from_num(12.0/16.0) {
             return beta_values[7];
         }
-        else if x < T::mixed_from_num(13.0/16.0) {
+        else if x < T::from_num(13.0/16.0) {
             return beta_values[8];
         }
-        else if x < T::mixed_from_num(14.0/16.0) {
+        else if x < T::from_num(14.0/16.0) {
             return beta_values[9];
         }
-        else if x < T::mixed_from_num(15.0/16.0) {
+        else if x < T::from_num(15.0/16.0) {
             return beta_values[10];
         }
         else {
@@ -136,20 +134,20 @@ pub fn niirf<T>( x: T, iterations: usize ) -> T
     }
 
     // Estimate the square root for x, when 0.25 =< x < 1.
-    let mut y = (T::mixed_from_num(2)*x_)/T::mixed_from_num(3) + T::mixed_from_num(0.354167);   // y0
+    let mut y = (T::from_num(2)*x_)/T::from_num(3) + T::from_num(0.354167);   // y0
     for _n in 1..iterations
     {
-        y = beta(x_)*(x_-y.mixed_powi(2))+y;
+        y = beta(x_)*(x_-super::powi(y,2))+y;
     }
 
     // Denormalize the solution.
     if 0 < norm
     {
-        y = y*T::mixed_from_num(2).mixed_powi(norm as i32);
+        y = y<<norm as u32;
     }
     else if norm < 0
     {
-        y = y/T::mixed_from_num(2).mixed_powi(norm as i32);
+        y = y>>norm.abs() as u32;
     }
     return y;
 }

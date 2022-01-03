@@ -88,7 +88,6 @@ pub fn sign<T>( x:T ) -> T
         return T::from_num(1);
     }
 }
-
 /// Calculate sin(x) using a Taylor approximation of `sin(x)`.
 /// 
 /// Sin is calculated using the following polynomial:
@@ -132,29 +131,29 @@ pub fn sign<T>( x:T ) -> T
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/cordic_poly_sine_error_comparison.png?raw=true)
 /// 
 pub fn sin<T>( x: T ) -> T
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
+    where T: fixed::traits::FixedSigned + mixed_num::MixedNum
 {
-    let mixed_pi_half:T = T::mixed_pi()/T::mixed_from_num(2);
+    let pi_half:T = <T>::from_num(fixed::consts::PI/2);
 
     let mut x_: T = x;
 
     // Ensure that the angle is within the accurate range of the tailor series. 
-    if x_ < -mixed_pi_half
+    if x_ < -pi_half
     {   
-        let delta:T = x+mixed_pi_half;
-        x_ = -mixed_pi_half+delta.mixed_abs();
+        let delta:T = x+pi_half;
+        x_ = -pi_half+delta.abs();
     }
-    else if mixed_pi_half < x
+    else if pi_half < x
     {
-        let delta:T = x-mixed_pi_half;
-        x_ = mixed_pi_half-delta.mixed_abs();
+        let delta:T = x-pi_half;
+        x_ = pi_half-delta.abs();
     }
 
     // Calculate sine by using 
-    let mut sinx = x_-( x.mixed_powi(3)/T::mixed_from_num(6) );
-    sinx += x.mixed_powi(5)/T::mixed_from_num(120);
-    sinx -= (x.mixed_powi(7)/T::mixed_from_num(315)) / T::mixed_from_num(16);
-    sinx += (((x.mixed_powi(9)/T::mixed_from_num(81))/<T>::mixed_from_num(7))/T::mixed_from_num(5)) / T::mixed_from_num(128);
+    let mut sinx = x_-( powi(x_,3)/<T>::from_num(6) );
+    sinx += powi(x_,5)/<T>::from_num(120);
+    sinx -= (powi(x_,7)/<T>::from_num(315)) >> 4;
+    sinx += (((powi(x_,9)/<T>::from_num(81))/<T>::from_num(7))/<T>::from_num(5)) >> 7;
     return sinx;
 }
 
@@ -199,12 +198,12 @@ pub fn sin<T>( x: T ) -> T
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/cordic_poly_cos_error_comparison.png?raw=true)
 /// 
 pub fn cos<T>( x: T ) -> T
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
+    where T: fixed::traits::FixedSigned + mixed_num::MixedNum + mixed_num::MixedNumSigned
 {
     // shift to enable use of more accurate sinepolynomial method.
-    let mixed_pi_half = T::mixed_pi()/T::mixed_from_num(2);
+    let pi_half = <T>::from_num(fixed::consts::PI/2);
 
-    let mut x_shifted = x+mixed_pi_half;
+    let mut x_shifted = x+pi_half;
     x_shifted = wrap_phase(x_shifted);
     return sin(x_shifted);
 }

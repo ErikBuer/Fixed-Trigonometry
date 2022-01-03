@@ -1,8 +1,6 @@
 use super::*;
 
 use num::complex::Complex;
-use fixed::traits::Fixed;
-use fixed::traits::FixedSigned;
 
 /// Cast cartesian complex fixed point number to polar form.
 /// 
@@ -11,7 +9,7 @@ use fixed::traits::FixedSigned;
 /// * `x` - The number transform.
 /// 
 pub fn to_polar<T>( x: Complex<T> ) -> Polar<T>
-    where T:  mixed_num::MixedNum + mixed_num::MixedNumSigned + cordic::CordicNumber
+    where T:  mixed_num::MixedNum + mixed_num::MixedNumSigned + fixed::traits::FixedSigned + cordic::CordicNumber
 {
     let c_polar = Polar::<T>{
         r:     abs(x),
@@ -27,7 +25,7 @@ pub fn to_polar<T>( x: Complex<T> ) -> Polar<T>
 /// * `a` - The argument to apply the function to.
 /// 
 pub fn abs<T>( a: Complex<T> ) -> T
-where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
+where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + fixed::traits::FixedSigned
 {
     let r_sqr = super::powi( a.re, 2) + super::powi( a.im, 2);
     //return r_sqr.sqrt();
@@ -106,7 +104,7 @@ pub fn mul_polar<T>( a: Polar<T>, b: Polar<T> ) -> Polar<T>
 
 /// Multiply two polar numbers by transforming to polar, multiplying and transfomring back.
 pub fn mul_cartesian<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
-    where T:  mixed_num::MixedNum + mixed_num::MixedNumSigned + cordic::CordicNumber
+    where T:  mixed_num::MixedNum + mixed_num::MixedNumSigned + fixed::traits::FixedSigned + cordic::CordicNumber
 {
     let a_pol = to_polar(a);
     let b_pol = to_polar(b);

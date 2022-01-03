@@ -126,10 +126,10 @@ fn bitreverse_order<T>( arr: &mut [Complex<T>] )
 ///                         Complex::<F<U>>::new(F::<U>::from_num(-0.000000007),    F::<U>::from_num(0.25073779)   )] );
 /// ```
 pub fn fft<T>( array: &mut [Complex<T>] )
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + cordic::CordicNumber
+    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + FixedSigned + cordic::CordicNumber
 {
     // Process fft.
-    fft_processor(array, T::mixed_from_num(1));
+    fft_processor(array, T::from_num(1));
 
     // Decimation-in-freqency.
     bitreverse_order(array); // Bitreverse order
@@ -168,10 +168,10 @@ pub fn fft<T>( array: &mut [Complex<T>] )
 ///                         Complex::<F<U>>::new(F::<U>::from_num(0.00000001),   F::<U>::from_num(-0.2507378) )] );
 /// ```
 pub fn ifft<T>( vec: &mut Vec<Complex<T>> )
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + cordic::CordicNumber
+    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + FixedSigned + cordic::CordicNumber
 {
     // Process fft.
-    fft_processor(vec, T::mixed_from_num(-1));
+    fft_processor(vec, T::from_num(-1));
     // Decimation-in-freqency.
     bitreverse_order(vec); // Bitreverse order
 }
@@ -185,7 +185,7 @@ pub fn ifft<T>( vec: &mut Vec<Complex<T>> )
 /// * `w` - twiddle factor.
 /// 
 fn butterfly_df<T>( a: &mut Complex<T>, b: &mut Complex<T>, w:Complex<T> )
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + cordic::CordicNumber
+    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned +FixedSigned + cordic::CordicNumber
 {
     let temp_a = crate::complex::add(*a,*b);
     //  let temp_b = complex::mul_cartesian(complex::sub(*a, complex::scale_cartesian(T::from_num(2), *b)), w);
@@ -198,7 +198,7 @@ fn butterfly_df<T>( a: &mut Complex<T>, b: &mut Complex<T>, w:Complex<T> )
 /// Shared fft processor for fft and ifft.
 /// Requires bit-reversion afterwards.
 fn fft_processor<T>( array: &mut [Complex<T>], dir: T )
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + cordic::CordicNumber
+    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + FixedSigned + cordic::CordicNumber
 {
     let n = array.len();
 
@@ -206,9 +206,9 @@ fn fft_processor<T>( array: &mut [Complex<T>], dir: T )
     let mut w = Vec::<Complex<T>>::with_capacity(n/2);
 
     // Calculate Twiddle factor W.
-    w.push( Complex::new( <T>::mixed_from_num(1), <T>::mixed_from_num(0) ) );
+    w.push( Complex::new( <T>::from_num(1), <T>::from_num(0) ) );
 
-    let angle:T = (dir*-<T>::mixed_from_num(2)) /(T::mixed_from_num(2).mixed_powi(log2(n) as i32));
+    let angle:T = (dir*-<T>::from_num(fixed::consts::TAU)) >> log2(n) as u32;
     let mut phase_inc = angle;
     for _i in 1..n/2
     {
@@ -242,8 +242,8 @@ fn fft_processor<T>( array: &mut [Complex<T>], dir: T )
             for j in 0..num_butt
             {
                 // Scale values to avoid overflow.
-                let mut a = crate::complex::div_cartesian( array[pa+j], T::mixed_from_num(2.0) );
-                let mut b = crate::complex::div_cartesian( array[pb+j], T::mixed_from_num(2.0) );
+                let mut a = crate::complex::div_cartesian( array[pa+j], T::from_num(2.0) );
+                let mut b = crate::complex::div_cartesian( array[pb+j], T::from_num(2.0) );
                 let w_temp = w[ stage*j ];
                 
                 butterfly_df( &mut a, &mut b, w_temp );

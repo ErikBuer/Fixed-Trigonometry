@@ -1,6 +1,5 @@
 use plotters::prelude::*;
 
-
 /// Plots comparison between various sqrt implementations.
 #[test]
 fn compare_polynomial_sine() -> Result<(), Box<dyn std::error::Error>> 

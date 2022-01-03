@@ -32,7 +32,7 @@ fn atan2_comparison() -> Result<(), Box<dyn std::error::Error>>
     chart.configure_mesh().draw()?;
 
     let atan2_series = LineSeries::new(
-        (-500..=500).map(|x| x as f32 *PI / 500.0).map(|x| (x, atan::atan2(F::<U>::mixed_from_num(x.sin()), F::<U>::mixed_from_num(x.cos()) ).to_num::<f32>() )),
+        (-500..=500).map(|x| x as f32 *PI / 500.0).map(|x| (x, atan::atan2(F::<U>::from_num(x.sin()), F::<U>::from_num(x.cos()) ).to_num::<f32>() )),
         &RED);
 
     // Draws a sinle line
