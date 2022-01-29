@@ -190,7 +190,7 @@ pub fn atan2<T>( y: T, x: T ) -> T
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/atan_error_comparisons.png?raw=true)
 /// 
 pub fn atan<T>( x: T ) -> T
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + cordic::CordicNumber
+    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
 {
     return atan2(x,T::mixed_from_num(1));
 }
