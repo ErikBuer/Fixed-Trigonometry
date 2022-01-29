@@ -9,7 +9,7 @@
 
 - Added comparison between `atan::atan` and `cordic::atan`.
 - Changed vector argument of fft to `&mut [Complex<T>]`.
-- Changed descrtiption of the `niirf` error plot, and added error comparison with `cordic::sqrt`.
+- Changed description of the `niirf` error plot, and added error comparison with `cordic::sqrt`.
 
 ## Release 0.3.1 (2021-11-29)
 
