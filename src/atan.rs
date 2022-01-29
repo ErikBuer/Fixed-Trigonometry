@@ -32,7 +32,7 @@ fn atan_poly_1<T>( y: T, x: T ) -> T
 fn atan_poly_2<T>( y: T, x: T ) -> T
     where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
 {
-    let phi     = (x*y) / ( super::powi(y, 2) + T::mixed_from_num( 0.28125 )*x.mixed_powi(2) );
+    let phi     = (x*y) / ( y.mixed_powi( 2) + T::mixed_from_num( 0.28125 )*x.mixed_powi(2) );
     return phi;
 }
 
