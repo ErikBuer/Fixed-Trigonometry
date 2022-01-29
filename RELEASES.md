@@ -1,6 +1,6 @@
 # Release Notes
 
-## Release 0.3.3 (2022-01-xx)
+## Release 0.3.3 (2022-01-04)
 
 - Changed to Rust 2021.
 - Implemented mixed-num trait to add floating point support as well.
