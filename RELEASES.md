@@ -1,5 +1,10 @@
 # Release Notes
 
+## Release 0.3.4 (2022-01-29)
+
+- Changed to Rust 2021.
+- Implemented mixed-num support for the `::complex` and `::fft` modules.
+
 ## Release 0.3.3 (2022-01-04)
 
 - Changed to Rust 2021.
