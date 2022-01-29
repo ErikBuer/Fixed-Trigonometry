@@ -21,7 +21,7 @@ crate-type = ["lib"]
 [dependencies]
 fixed     = "1.10.0"
 cordic    = "0.1.5"
-mixed-num = "^0.1.4"
+mixed-num = "^0.1.5"
 
 [dev-dependencies]
 plotters = "^0.3.1"
