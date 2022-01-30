@@ -1,3 +1,5 @@
+use mixed_num::traits::*;
+
 /// Atan polynomial for below function.
 /// 
 /// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
@@ -11,7 +13,7 @@
 /// 
 /// TODO 
 fn atan_poly_1<T>( y: T, x: T ) -> T
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
+    where T: MixedNum + MixedNumSigned
 {
     let phi = (x*y) / ( x.mixed_powi(2) + T::mixed_from_num( 0.28125 )*y.mixed_powi(2) );
     return phi;
@@ -30,7 +32,7 @@ fn atan_poly_1<T>( y: T, x: T ) -> T
 /// 
 /// TODO 
 fn atan_poly_2<T>( y: T, x: T ) -> T
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
+    where T: MixedNum + MixedNumSigned
 {
     let phi     = (x*y) / ( y.mixed_powi( 2) + T::mixed_from_num( 0.28125 )*x.mixed_powi(2) );
     return phi;
@@ -71,7 +73,7 @@ fn atan_poly_2<T>( y: T, x: T ) -> T
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/atan2_comparisons.png?raw=true)
 /// 
 pub fn atan2<T>( y: T, x: T ) -> T
-    where T:  mixed_num::MixedNum + mixed_num::MixedNumSigned
+    where T:  MixedNum + MixedNumSigned
 {
     // Precompute
     let y_abs = y.mixed_abs();
@@ -190,7 +192,7 @@ pub fn atan2<T>( y: T, x: T ) -> T
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/atan_error_comparisons.png?raw=true)
 /// 
 pub fn atan<T>( x: T ) -> T
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
+    where T: MixedNum + MixedNumSigned
 {
     return atan2(x,T::mixed_from_num(1));
 }

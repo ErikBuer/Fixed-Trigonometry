@@ -1,7 +1,7 @@
 extern crate alloc;
 use alloc::vec::Vec;
 
-use mixed_num::MixedTrigonometry;
+use mixed_num::traits::*;
 use num::complex::Complex;
 
 /// Check if x is a power of two.
@@ -122,7 +122,7 @@ fn bitreverse_order<T>( arr: &mut [Complex<T>] )
 ///                         Complex::<F<U>>::new(F::<U>::from_num(-0.000000007),    F::<U>::from_num(0.250737797)   )] );
 /// ```
 pub fn fft<T>( array: &mut [Complex<T>] )
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + MixedTrigonometry
+    where T: MixedNum + MixedNumSigned + MixedTrigonometry
 {
     // Process fft.
     fft_processor(array, T::mixed_from_num(1));
@@ -164,7 +164,7 @@ pub fn fft<T>( array: &mut [Complex<T>] )
 ///                         Complex::<F<U>>::new(F::<U>::from_num(0.00000001),   F::<U>::from_num(-0.2507378) )] );
 /// ```
 pub fn ifft<T>( vec: &mut Vec<Complex<T>> )
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + mixed_num::MixedTrigonometry
+    where T: MixedNum + MixedNumSigned + MixedTrigonometry
 {
     // Process fft.
     fft_processor(vec, T::mixed_from_num(-1));
@@ -181,7 +181,7 @@ pub fn ifft<T>( vec: &mut Vec<Complex<T>> )
 /// * `w` - twiddle factor.
 /// 
 fn butterfly_df<T>( a: &mut Complex<T>, b: &mut Complex<T>, w:Complex<T> )
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + mixed_num::MixedTrigonometry
+    where T: MixedNum + MixedNumSigned + MixedTrigonometry
 {
     let temp_a = crate::complex::add(*a,*b);
     //  let temp_b = complex::mul_cartesian(complex::sub(*a, complex::scale_cartesian(T::from_num(2), *b)), w);
@@ -194,7 +194,7 @@ fn butterfly_df<T>( a: &mut Complex<T>, b: &mut Complex<T>, w:Complex<T> )
 /// Shared fft processor for fft and ifft.
 /// Requires bit-reversion afterwards.
 fn fft_processor<T>( array: &mut [Complex<T>], dir: T )
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + mixed_num::MixedTrigonometry
+    where T: MixedNum + MixedNumSigned + MixedTrigonometry
 {
     let n = array.len();
 
