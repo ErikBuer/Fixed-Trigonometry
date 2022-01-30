@@ -1,3 +1,5 @@
+use mixed_num::traits::*;
+
 /// A fast implementation of the square root using the Nonlinear IIR Filter (NIIRF) method \[1\].
 /// 
 /// Only valid for positive values of x.
@@ -54,7 +56,7 @@
 /// 
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/sqrt_error_comparison.png?raw=true)
 pub fn niirf<T>( x: T, iterations: usize ) -> T 
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned + fixed::traits::FixedSigned
+    where T: MixedNum + MixedNumSigned + fixed::traits::FixedSigned
 {
     if x == T::from_num(0)
     {

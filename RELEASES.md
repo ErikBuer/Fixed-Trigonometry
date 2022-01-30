@@ -1,5 +1,9 @@
 # Release Notes
 
+## Release 0.3.5 (2022-01-30)
+
+- Updated to support restructured traits in the mixed-num crate.
+
 ## Release 0.3.4 (2022-01-29)
 
 - Changed to Rust 2021.

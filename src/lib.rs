@@ -21,6 +21,7 @@
 extern crate std;
 
 use fixed;
+use mixed_num::traits::*;
 
 pub mod complex;
 pub mod atan;
@@ -46,7 +47,7 @@ pub mod fft;
 /// assert_eq!{ y.to_num::<f32>(), 4.0 };
 /// ``` 
 pub fn powi<T>( base:T, power:usize ) -> T
-    where T: mixed_num::MixedNum
+    where T: MixedNum
 {
     let mut temp:T = base;
     for _i in 0..power-1 {
@@ -131,7 +132,7 @@ pub fn sign<T>( x:T ) -> T
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/cordic_poly_sine_error_comparison.png?raw=true)
 /// 
 pub fn sin<T>( x: T ) -> T
-    where T: fixed::traits::FixedSigned + mixed_num::MixedNum
+    where T: fixed::traits::FixedSigned + MixedNum
 {
     let pi_half:T = <T>::from_num(fixed::consts::PI/2);
 
@@ -198,7 +199,7 @@ pub fn sin<T>( x: T ) -> T
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/cordic_poly_cos_error_comparison.png?raw=true)
 /// 
 pub fn cos<T>( x: T ) -> T
-    where T: fixed::traits::FixedSigned + mixed_num::MixedNum + mixed_num::MixedNumSigned
+    where T: fixed::traits::FixedSigned + MixedNum + MixedNumSigned
 {
     // shift to enable use of more accurate sinepolynomial method.
     let pi_half = <T>::from_num(fixed::consts::PI/2);
@@ -225,7 +226,7 @@ pub fn cos<T>( x: T ) -> T
 /// assert_eq!{ wrapped_phi.to_num::<f32>(), -0.2831853 };
 /// ``` 
 pub fn wrap_phase<T>( phi: T ) -> T 
-    where T: mixed_num::MixedNum + mixed_num::MixedNumSigned
+    where T: MixedNum + MixedNumSigned
 {
     let mixed_pi  = T::mixed_pi();
     let tau = T::mixed_from_num(2)*mixed_pi;

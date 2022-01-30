@@ -1,6 +1,6 @@
 use plotters::prelude::*;
 use fixed_trigonometry::*;
-use mixed_num::*;
+use mixed_num::traits::*;
 
 /// Plots comparison between various atan implementations.
 #[test]

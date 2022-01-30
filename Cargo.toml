@@ -1,6 +1,6 @@
 [package]
 name = "fixed_trigonometry"
-version = "0.3.4"
+version = "0.3.5"
 edition = "2021"
 authors = ["Erik Buer"]
 description = "Fixed point numerical approimations to trigonometric functions."
@@ -21,7 +21,7 @@ crate-type = ["lib"]
 [dependencies]
 fixed     = "1.10.0"
 cordic    = "0.1.5"
-mixed-num = "^0.1.5"
+mixed-num = "^0.1.6"
 
 [dev-dependencies]
 plotters = "^0.3.1"
