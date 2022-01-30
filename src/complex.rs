@@ -30,7 +30,6 @@ pub fn abs<T>( a: Complex<T> ) -> T
 where T: MixedNum + MixedNumSigned
 {
     let r_sqr = super::powi( a.re, 2) + super::powi( a.im, 2);
-    //return r_sqr.sqrt();
     return trigonometry::sqrt::niirf(r_sqr, 2);
 }
 
