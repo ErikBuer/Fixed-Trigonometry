@@ -1,5 +1,9 @@
 # Release Notes
 
+## Release 0.3.6 (2022-02-01)
+
+- Minor improvements of polynomial sine.
+
 ## Release 0.3.5 (2022-01-30)
 
 - Updated to support restructured traits in the mixed-num crate.

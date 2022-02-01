@@ -114,6 +114,10 @@ pub fn sign<T>( x:T ) -> T
 /// x = FixedI32::<U22>::from_num(3.1415/2.0);
 /// y = sin(x);
 /// assert_eq!{ y.to_num::<f32>(), 1.0000036 };
+/// 
+/// x = FixedI32::<U22>::from_num(3.1415);
+/// y = sin(x);
+/// assert_eq!{ y.to_num::<f32>(), 9.250641e-5 };
 /// ``` 
 /// 
 /// ## Comparison and Error
@@ -142,12 +146,12 @@ pub fn sin<T>( x: T ) -> T
     if x_ < -pi_half
     {   
         let delta:T = x+pi_half;
-        x_ = -pi_half+delta.abs();
+        x_ = -pi_half-delta;
     }
     else if pi_half < x
     {
         let delta:T = x-pi_half;
-        x_ = pi_half-delta.abs();
+        x_ = pi_half-delta;
     }
 
     // Calculate sine by using 
