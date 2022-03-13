@@ -33,7 +33,7 @@ pub fn to_polar<T>( x: Complex<T> ) -> Polar<T>
 /// use fixed_trigonometry::complex::*;
 /// 
 /// let mut x = Complex{re:1f32, im:0f32};
-/// assert_eq!{ to_cartsian(x), 1f32 };
+/// assert_eq!{ abs(x), 1f32 };
 /// ``` 
 /// 
 pub fn abs<T>( a: Complex<T> ) -> T

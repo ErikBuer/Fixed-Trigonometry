@@ -2,6 +2,7 @@
 
 ## Release 0.4.0 (2022-03-13)
 
+- Bumbs version of `fixed`.
 - Bumps version of mixed_num. Brings major accuracy improvement for floating point types (utilizing the complex utilities).
 - Efficiency improvement of `to_cartsian()` function.
 
