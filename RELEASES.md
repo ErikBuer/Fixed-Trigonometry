@@ -1,5 +1,10 @@
 # Release Notes
 
+## Release 0.3.7 (2022-03-13)
+
+- Bumps version of mixed_num.
+- Efficiency improvement of `to_cartsian()` function.
+
 ## Release 0.3.6 (2022-02-01)
 
 - Minor improvements of polynomial sine.

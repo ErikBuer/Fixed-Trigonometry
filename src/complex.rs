@@ -9,9 +9,9 @@ use mixed_num::traits::*;
 /// ## Arguments
 /// 
 /// * `x` - The number transform.
-/// 
+///
 pub fn to_polar<T>( x: Complex<T> ) -> Polar<T>
-    where T:  MixedNum + MixedNumSigned
+    where T:  MixedNum + MixedNumSigned + MixedSqrt
 {
     let c_polar = Polar::<T>{
         r:     abs(x),
@@ -26,11 +26,21 @@ pub fn to_polar<T>( x: Complex<T> ) -> Polar<T>
 /// 
 /// * `a` - The argument to apply the function to.
 /// 
+/// ## Example
+/// 
+/// ```
+/// use num::complex::Complex;
+/// use fixed_trigonometry::complex::*;
+/// 
+/// let mut x = Complex{re:1f32, im:0f32};
+/// assert_eq!{ to_cartsian(x), 1f32 };
+/// ``` 
+/// 
 pub fn abs<T>( a: Complex<T> ) -> T
-where T: MixedNum + MixedNumSigned
+where T: MixedNum + MixedNumSigned + MixedSqrt
 {
     let r_sqr = super::powi( a.re, 2) + super::powi( a.im, 2);
-    return trigonometry::sqrt::niirf(r_sqr, 2);
+    return r_sqr.mixed_sqrt();
 }
 
 /// Polar complex nuber.
@@ -54,6 +64,7 @@ pub struct Polar<T> {
 /// let mut x = Polar{r:1f32, theta:0f32};
 /// assert_eq!{ to_cartsian(x).to_string(), "1+0i" };
 /// ``` 
+/// 
 pub fn to_cartsian<T>( a: Polar<T> ) -> Complex<T>
     where T: MixedNum + MixedNumSigned + MixedTrigonometry
 {
@@ -68,6 +79,7 @@ pub fn to_cartsian<T>( a: Polar<T> ) -> Complex<T>
 }
 
 /// Add two complex fixed-point numbers in cartesian form.
+/// 
 pub fn add<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
     where T: MixedNum
 {
@@ -80,6 +92,7 @@ pub fn add<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
 
 /// Subtract b from a.
 /// c = a-b
+/// 
 pub fn sub<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
     where T: MixedNum + MixedNumSigned
 {
@@ -91,6 +104,7 @@ pub fn sub<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
 }
 
 /// Multiply fixed-point complex numbers in polar form.
+/// 
 pub fn mul_polar<T>( a: Polar<T>, b: Polar<T> ) -> Polar<T>
     where T: MixedNum + MixedNumSigned
 {
@@ -113,8 +127,9 @@ pub fn mul_polar<T>( a: Polar<T>, b: Polar<T> ) -> Polar<T>
 }
 
 /// Multiply two polar numbers by transforming to polar, multiplying and transfomring back.
+/// 
 pub fn mul_cartesian<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
-    where T:  MixedNum + MixedNumSigned  + MixedTrigonometry
+    where T:  MixedNum + MixedNumSigned  + MixedTrigonometry + MixedSqrt
 {
     let a_pol = to_polar(a);
     let b_pol = to_polar(b);
@@ -145,6 +160,7 @@ pub fn mul_cartesian<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
 /// let result = Complex::new( FixedI32::<U22>::from_num( -0.019603, ), FixedI32::<U22>::from_num( 1.9959388 ));
 /// assert_eq!{ y, result };
 /// ```
+/// 
 pub fn powi<T>( base: num::complex::Complex<T>, power:usize ) -> num::complex::Complex<T>
     where T: fixed::traits::FixedSigned + cordic::CordicNumber + MixedNum + MixedNumSigned
 {   
@@ -162,8 +178,9 @@ pub fn powi<T>( base: num::complex::Complex<T>, power:usize ) -> num::complex::C
     return num::complex::Complex::new( real, imag);
 }
 
-/// divide a cartesian complex by a real scalar.
+/// Divide a cartesian complex by a real scalar.
 /// c = a/b
+/// 
 pub fn div_cartesian<T>( a: Complex<T>, b: T  ) -> Complex<T>
     where T: MixedNum + MixedNumSigned
 {
