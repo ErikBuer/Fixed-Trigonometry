@@ -148,7 +148,7 @@ pub fn sin<T>( x: T ) -> T
         let delta:T = x+pi_half;
         x_ = -pi_half-delta;
     }
-    else if pi_half < x
+    else if pi_half < x_
     {
         let delta:T = x-pi_half;
         x_ = pi_half-delta;
@@ -156,8 +156,8 @@ pub fn sin<T>( x: T ) -> T
 
     // Calculate sine by using 
     let mut sinx = x_-( powi(x_,3)/<T>::from_num(6) );
-    sinx += powi(x_,5)/<T>::from_num(120);
-    sinx -= (powi(x_,7)/<T>::from_num(315)) >> 4;
+    sinx +=    powi(x_,5)/<T>::from_num(120);
+    sinx -= (  powi(x_,7)/<T>::from_num(315)) >> 4;
     sinx += (((powi(x_,9)/<T>::from_num(81))/<T>::from_num(7))/<T>::from_num(5)) >> 7;
     return sinx;
 }

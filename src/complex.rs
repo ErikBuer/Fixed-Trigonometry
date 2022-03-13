@@ -45,13 +45,20 @@ pub struct Polar<T> {
 /// 
 /// * `a` - The number transform.
 /// 
+/// ## Example
+/// 
+/// ```
+/// use num::complex::Complex;
+/// use fixed_trigonometry::complex::*;
+/// 
+/// let mut x = Polar{r:1f32, theta:0f32};
+/// assert_eq!{ to_cartsian(x).to_string(), "1+0i" };
+/// ``` 
 pub fn to_cartsian<T>( a: Polar<T> ) -> Complex<T>
     where T: MixedNum + MixedNumSigned + MixedTrigonometry
 {
     let theta = crate::wrap_phase(a.theta);
-    //let (imag_s, real_s) = cordic::sin_cos( theta );
-    let imag_s = theta.mixed_sin();
-    let real_s = theta.mixed_cos();
+    let (imag_s, real_s) = theta.mixed_sincos();
 
     let c_cartesian = Complex::<T>{
         re: a.r*real_s,
