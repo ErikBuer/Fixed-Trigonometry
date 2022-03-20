@@ -1,5 +1,10 @@
 # Release Notes
 
+## Release 0.4.1 (2022-03-20)
+
+- Improves complex cartesian multiplication.
+- Corrects powi to include n⁰=1.
+
 ## Release 0.4.0 (2022-03-13)
 
 - Bumbs version of `fixed`.

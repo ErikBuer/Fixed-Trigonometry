@@ -126,16 +126,19 @@ pub fn mul_polar<T>( a: Polar<T>, b: Polar<T> ) -> Polar<T>
     }
 }
 
-/// Multiply two polar numbers by transforming to polar, multiplying and transfomring back.
+/// Multiply two cartesian complex numbers.
 /// 
-pub fn mul_cartesian<T>( a: Complex<T>, b: Complex<T> ) -> Complex<T>
-    where T:  MixedNum + MixedNumSigned  + MixedTrigonometry + MixedSqrt
-{
-    let a_pol = to_polar(a);
-    let b_pol = to_polar(b);
+pub fn mul_cartesian<T>( ab: Complex<T>, bc: Complex<T> ) -> Complex<T>
+    where T:  MixedNum + MixedNumSigned 
+{   
+    let a = ab.re;
+    let b = ab.im;
+    let c = bc.re;
+    let d = bc.im;
 
-    let c_pol = mul_polar(a_pol, b_pol);
-    return to_cartsian(c_pol);
+    let re = (a*c) - (b*d);
+    let im = (a*d) + (b*c);
+    return Complex{re:re, im:im}
 }
 
 /// Rase a complex fixed-point number to an real-valued integer power.

@@ -1,6 +1,6 @@
 [package]
 name = "fixed_trigonometry"
-version = "0.4.0"
+version = "0.4.1"
 edition = "2021"
 authors = ["Erik Buer"]
 description = "Fixed point numerical approimations to trigonometric functions."
