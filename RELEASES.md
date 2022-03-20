@@ -1,5 +1,9 @@
 # Release Notes
 
+## Release 0.4.2 (2022-03-20)
+
+- Corrects fft twiddle factor index calculation.
+
 ## Release 0.4.1 (2022-03-20)
 
 - Improves complex cartesian multiplication.
