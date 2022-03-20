@@ -116,10 +116,10 @@ fn bitreverse_order<T>( arr: &mut [Complex<T>] )
 /// arr[3].re = F::<U>::from_num(0);
 /// 
 /// fft( &mut arr );
-/// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(0.75),            F::<U>::from_num(0)             ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0),               F::<U>::from_num(-0.2503761)    ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.250376098),     F::<U>::from_num(0.0)           ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(-0.000000007),    F::<U>::from_num(0.250737797)   )] );
+/// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(0.75),            F::<U>::from_num(0)     ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(-0.000000004),    F::<U>::from_num(-0.25) ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.25),            F::<U>::from_num(0.0)   ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.000000004),     F::<U>::from_num(0.25)  )] );
 /// ```
 pub fn fft<T>( array: &mut [Complex<T>] )
     where T: MixedNum + MixedNumSigned + MixedTrigonometry + MixedSqrt
@@ -159,9 +159,9 @@ pub fn fft<T>( array: &mut [Complex<T>] )
 /// 
 /// ifft( &mut arr );
 /// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(0.75),         F::<U>::from_num(0.0)      ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(-0.000000004), F::<U>::from_num(0.2503761)),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.250376098),  F::<U>::from_num(0.0)      ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.00000001),   F::<U>::from_num(-0.2507378) )] );
+///                         Complex::<F<U>>::new(F::<U>::from_num(-0.000000004), F::<U>::from_num(0.25)),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.25),         F::<U>::from_num(0.0)      ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.000000004),  F::<U>::from_num(-0.25) )] );
 /// ```
 pub fn ifft<T>( vec: &mut Vec<Complex<T>> )
     where T: MixedNum + MixedNumSigned + MixedTrigonometry + MixedSqrt

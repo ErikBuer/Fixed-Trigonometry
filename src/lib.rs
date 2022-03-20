@@ -45,10 +45,18 @@ pub mod fft;
 /// let mut x = FixedI32::<U22>::from_num(-2);
 /// let y = powi(x, 2);
 /// assert_eq!{ y.to_num::<f32>(), 4.0 };
+/// 
+/// let y = powi(x, 0);
+/// assert_eq!{ y.to_num::<f32>(), 1.0 };
 /// ``` 
 pub fn powi<T>( base:T, power:usize ) -> T
     where T: MixedNum
 {
+    if power==0
+    {
+        return T::mixed_from_num(1);
+    }
+
     let mut temp:T = base;
     for _i in 0..power-1 {
         temp = temp*base;
