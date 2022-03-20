@@ -111,15 +111,15 @@ fn bitreverse_order<T>( arr: &mut [Complex<T>] )
 /// use num::complex::Complex;
 /// 
 /// const N:usize = 4;
-/// let mut arr  = vec![ Complex::<F<U>>::new(F::<U>::from_num(1), F::<U>::from_num(0) ); N  ];
+/// let mut arr  = vec![ Complex::<F<U>>::new(F::<U>::from_num(1f32), F::<U>::from_num(0f32) ); N  ];
 ///
-/// arr[3].re = F::<U>::from_num(0);
+/// arr[3].re = F::<U>::from_num(0f32);
 /// 
 /// fft( &mut arr );
-/// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(0.75),            F::<U>::from_num(0)     ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(-0.000000004),    F::<U>::from_num(-0.25) ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.25),            F::<U>::from_num(0.0)   ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.000000004),     F::<U>::from_num(0.25)  )] );
+/// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(0.75f32),            F::<U>::from_num(0f32)     ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(-0.000000004f32),    F::<U>::from_num(-0.25f32) ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.25f32),            F::<U>::from_num(0.0f32)   ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.000000004f32),     F::<U>::from_num(0.25f32)  )] );
 /// ```
 pub fn fft<T>( array: &mut [Complex<T>] )
     where T: MixedNum + MixedNumSigned + MixedTrigonometry + MixedSqrt
