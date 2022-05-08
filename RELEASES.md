@@ -1,5 +1,10 @@
 # Release Notes
 
+## Release 0.4.3 (2022-05-08)
+
+- Corrects ifft scaling.
+- Bumps `mixed-num` to latest version.
+
 ## Release 0.4.2 (2022-03-20)
 
 - Corrects fft twiddle factor index calculation.

@@ -122,7 +122,7 @@ fn bitreverse_order<T>( arr: &mut [Complex<T>] )
 ///                         Complex::<F<U>>::new(F::<U>::from_num(0.000000004f32),     F::<U>::from_num(0.25f32)  )] );
 /// ```
 pub fn fft<T>( array: &mut [Complex<T>] )
-    where T: MixedNum + MixedNumSigned + MixedTrigonometry + MixedSqrt
+    where T: MixedNum + MixedNumSigned + MixedTrigonometry + MixedSqrt + MixedNumConversion<i32> + MixedReal + MixedOps + MixedPi + MixedOne
 {
     // Process fft.
     fft_processor(array, T::mixed_from_num(1));
@@ -158,16 +158,16 @@ pub fn fft<T>( array: &mut [Complex<T>] )
 /// arr[3].re = F::<U>::from_num(0);
 /// 
 /// ifft( &mut arr );
-/// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(0.75),         F::<U>::from_num(0.0)      ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(-0.000000004), F::<U>::from_num(0.25)),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.25),         F::<U>::from_num(0.0)      ),
-///                         Complex::<F<U>>::new(F::<U>::from_num(0.000000004),  F::<U>::from_num(-0.25) )] );
+/// assert_eq!( arr, vec![  Complex::<F<U>>::new(F::<U>::from_num(3),             F::<U>::from_num(0)      ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(-0.000000015,), F::<U>::from_num(1.000000004)),
+///                         Complex::<F<U>>::new(F::<U>::from_num(1),             F::<U>::from_num(0)      ),
+///                         Complex::<F<U>>::new(F::<U>::from_num(0.000000015,),  F::<U>::from_num(-1.000000004) )] );
 /// ```
 pub fn ifft<T>( vec: &mut Vec<Complex<T>> )
-    where T: MixedNum + MixedNumSigned + MixedTrigonometry + MixedSqrt
+    where T: MixedNum + MixedNumSigned + MixedTrigonometry + MixedSqrt + MixedNumConversion<i32> + MixedReal + MixedOps + MixedPi + MixedOne
 {
     // Process fft.
-    fft_processor(vec, T::mixed_from_num(-1));
+    fft_processor(vec, T::mixed_from_num(-1i32));
     // Decimation-in-freqency.
     bitreverse_order(vec); // Bitreverse order
 }
@@ -181,7 +181,7 @@ pub fn ifft<T>( vec: &mut Vec<Complex<T>> )
 /// * `w` - twiddle factor.
 /// 
 fn butterfly_df<T>( a: &mut Complex<T>, b: &mut Complex<T>, w:Complex<T> )
-    where T: MixedNum + MixedNumSigned + MixedTrigonometry + MixedSqrt
+    where T: MixedNum + MixedNumSigned + MixedTrigonometry + MixedSqrt + MixedOps
 {
     let temp_a = crate::complex::add(*a,*b);
     //  let temp_b = complex::mul_cartesian(complex::sub(*a, complex::scale_cartesian(T::from_num(2), *b)), w);
@@ -194,15 +194,26 @@ fn butterfly_df<T>( a: &mut Complex<T>, b: &mut Complex<T>, w:Complex<T> )
 /// Shared fft processor for fft and ifft.
 /// Requires bit-reversion afterwards.
 fn fft_processor<T>( array: &mut [Complex<T>], dir: T )
-    where T: MixedNum + MixedNumSigned + MixedTrigonometry + MixedSqrt
+    where T: MixedNum + MixedReal + MixedNumSigned + MixedTrigonometry + MixedSqrt + MixedNumConversion<i32> + MixedOne + MixedPi + MixedOps
 {
+
+    let scale_factor:T;
+    if dir == T::mixed_one()
+    {
+        scale_factor=T::mixed_from_num(2i32);
+    }
+    else
+    {
+        scale_factor=T::mixed_from_num(1i32);
+    }
+
     let n = array.len();
 
     // Create heap-allocated vector
     let mut w = Vec::<Complex<T>>::with_capacity(n/2);
 
     // Calculate Twiddle factor W.
-    w.push( Complex::new( <T>::mixed_from_num(1), <T>::mixed_from_num(0) ) );
+    w.push( Complex::new( <T>::mixed_from_num(1i32), <T>::mixed_from_num(0i32) ) );
 
     let mut angle:T = dir*-<T>::mixed_pi()*T::mixed_from_num(2);
     for _i in 0..log2(n)
@@ -244,8 +255,8 @@ fn fft_processor<T>( array: &mut [Complex<T>], dir: T )
             for butt in 0..num_butt
             {
                 // Scale values to avoid overflow.
-                let mut a = crate::complex::div_cartesian( array[pa+butt], T::mixed_from_num(2) );
-                let mut b = crate::complex::div_cartesian( array[pb+butt], T::mixed_from_num(2) );
+                let mut a = crate::complex::div_cartesian( array[pa+butt], scale_factor );
+                let mut b = crate::complex::div_cartesian( array[pb+butt], scale_factor );
                 
                 let w_idx:usize = w_idx_step_size*(butt);
                 let w_temp = w[ w_idx ];
