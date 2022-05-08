@@ -3,6 +3,10 @@
 //! 
 //! It utilizes the [fixed](https://crates.io/crates/fixed) library to allow flexibility in fixed point sizes and precisions.
 //! 
+//! The library [mixed-num](https://crates.io/crates/mixed-num) has these functions implemented as traits.
+//! 
+//! The library [NDSP](https://crates.io/crates/ndsp) support fixed point numbers in vectors, with various implemented operations.
+//! 
 //! ## Example
 //! 
 //! ```
@@ -50,11 +54,11 @@ pub mod fft;
 /// assert_eq!{ y.to_num::<f32>(), 1.0 };
 /// ``` 
 pub fn powi<T>( base:T, power:usize ) -> T
-    where T: MixedNum
+    where T: MixedNum + MixedNumConversion<i32> + MixedOps
 {
     if power==0
     {
-        return T::mixed_from_num(1);
+        return T::mixed_from_num(1i32);
     }
 
     let mut temp:T = base;
@@ -144,7 +148,7 @@ pub fn sign<T>( x:T ) -> T
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/cordic_poly_sine_error_comparison.png?raw=true)
 /// 
 pub fn sin<T>( x: T ) -> T
-    where T: fixed::traits::FixedSigned + MixedNum
+    where T: fixed::traits::FixedSigned + MixedNum + MixedNumConversion<i32> + MixedOps
 {
     let pi_half:T = <T>::from_num(fixed::consts::PI/2);
 
@@ -211,7 +215,7 @@ pub fn sin<T>( x: T ) -> T
 /// ![Alt version](https://github.com/ErikBuer/Fixed-Trigonometry/blob/main/figures/cordic_poly_cos_error_comparison.png?raw=true)
 /// 
 pub fn cos<T>( x: T ) -> T
-    where T: fixed::traits::FixedSigned + MixedNum + MixedNumSigned
+    where T: fixed::traits::FixedSigned + MixedNum + MixedNumSigned + MixedOps + MixedPi
 {
     // shift to enable use of more accurate sinepolynomial method.
     let pi_half = <T>::from_num(fixed::consts::PI/2);
@@ -238,7 +242,7 @@ pub fn cos<T>( x: T ) -> T
 /// assert_eq!{ wrapped_phi.to_num::<f32>(), -0.2831853 };
 /// ``` 
 pub fn wrap_phase<T>( phi: T ) -> T 
-    where T: MixedNum + MixedNumSigned
+    where T: MixedNum + MixedNumSigned + MixedNumConversion<i32> + MixedOps + MixedPi
 {
     let mixed_pi  = T::mixed_pi();
     let tau = T::mixed_from_num(2)*mixed_pi;
