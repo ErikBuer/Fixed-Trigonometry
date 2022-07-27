@@ -41,7 +41,7 @@ fn atan_poly_2<T>( y: T, x: T ) -> T
 
 /// Calculate atan2(y,x) using a selection of polynomial approximations, one for each octant in the unit circle.
 /// 
-/// The method is accurat within 0.028 degrees.
+/// The method is accurat within 0.28 degrees.
 /// 
 /// \[1\] R. G. Lyons, Streamlining Digital Signal Processing, Second Edition, IEEE Press, 2012.
 /// 
