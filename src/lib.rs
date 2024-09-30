@@ -21,7 +21,7 @@
 #![no_std]
 
 // Use std for test.
-#[cfg(all(not(feature = "std"), test))]
+#[cfg(all(not(feature = "alloc"), test))]
 extern crate std;
 
 use fixed;
