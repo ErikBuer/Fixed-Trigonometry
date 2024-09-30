@@ -1,5 +1,9 @@
 # Release Notes
 
+## Release 0.4.4 (2024-09-30)
+
+- "Add an alloc feature to control need for a global allocaror"
+
 ## Release 0.4.3 (2022-05-08)
 
 - Corrects ifft scaling.
