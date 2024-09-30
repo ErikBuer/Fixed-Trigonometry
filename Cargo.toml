@@ -11,16 +11,16 @@ keywords = ["dsp", "no_std"]
 exclude = ["figures/"]
 
 [lib]
-path  = "src/lib.rs"
+path = "src/lib.rs"
 bench = false
-doc   = true
-test  = true
+doc = true
+test = true
 crate-type = ["lib"]
 
 
 [dependencies]
-fixed     = "^1.13"
-cordic    = "^0.1"
+fixed = "^1.13"
+cordic = "^0.1"
 mixed-num = "^0.5"
 
 [dev-dependencies]
@@ -29,3 +29,7 @@ plotters = "^0.3.1"
 [dependencies.num]
 version = "^0.4"
 default-features = false
+
+[features]
+default = ["alloc"]
+alloc = []
